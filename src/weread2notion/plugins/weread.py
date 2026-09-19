@@ -1,10 +1,5 @@
 """WeRead plugin: wraps the existing Synchronizer engine, conforms to the Plugin protocol."""
-from __future__ import annotations
-import os
-from ..plugin import Category, Plugin, PluginContext, PluginMeta, SyncResult, CredentialSpec, CredentialType
-
-
-class WereadPlugin:
+from __future__ import annotationsimport osfrom ..plugin import (    Category,    CredentialSpec,    CredentialType,    PluginContext,    PluginMeta,    SyncResult,)class WereadPlugin:
     meta = PluginMeta(
         id="weread",
         name="微信读书",
@@ -31,15 +26,12 @@ class WereadPlugin:
         ctx.notion.ensure_reading_snapshots()
 
     def discover(self, ctx: PluginContext):
-        from ..sources import build_source
-        from ..weread import WeReadClient
+        from ..sources import build_source        from ..weread import WeReadClient
         client = WeReadClient(ctx.settings.weread_api_key, ctx.settings.skill_version)
         return build_source("weread", client).shelf().get("books", [])
 
     def sync(self, ctx: PluginContext) -> SyncResult:
-        from ..sources import build_source
-        from ..sync import Synchronizer
-        from ..weread import WeReadClient
+        from ..sources import build_source        from ..sync import Synchronizer        from ..weread import WeReadClient
         client = WeReadClient(ctx.settings.weread_api_key, ctx.settings.skill_version)
         source = build_source("weread", client)
         preferences = ctx.notion.ensure_sync_settings(ctx.settings.start_year)
@@ -53,9 +45,7 @@ class WereadPlugin:
         )
 
     def health(self, ctx: PluginContext) -> dict:
-        from ..status import workspace_status
-        from ..sources import build_source
-        from ..weread import WeReadClient
+        from ..sources import build_source        from ..status import workspace_status        from ..weread import WeReadClient
         try:
             client = WeReadClient(ctx.settings.weread_api_key, ctx.settings.skill_version)
             report = workspace_status(

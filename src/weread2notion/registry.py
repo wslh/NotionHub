@@ -7,9 +7,10 @@ Supports:
 - Lookup by id or category, with enable/disable filtering at the runner layer.
 """
 from __future__ import annotations
+
 from typing import Iterable, Iterator
 
-from .plugin import Category, Plugin, PluginMeta
+from .plugin import Category, Plugin
 
 
 class PluginRegistry:

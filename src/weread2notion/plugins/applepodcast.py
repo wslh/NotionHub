@@ -4,13 +4,7 @@ Apple Podcasts has no user-data API; the self-hosted path is to export your
 subscriptions as OPML (e.g. via a Shortcut / library export) and let this plugin
 fetch each feed's RSS. Reuses :class:`OpmlPodcastPlugin`.
 """
-from __future__ import annotations
-
-from ..plugin import Category, CredentialSpec, CredentialType, PluginMeta
-from .podcast import OpmlPodcastPlugin
-
-
-class ApplePodcastPlugin(OpmlPodcastPlugin):
+from __future__ import annotationsfrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom .podcast import OpmlPodcastPluginclass ApplePodcastPlugin(OpmlPodcastPlugin):
     OPML_ENV = "APPLEPODCAST_OPML"
     DB_NAME = "Apple 播客"
     meta = PluginMeta(

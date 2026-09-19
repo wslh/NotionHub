@@ -1,14 +1,5 @@
 """Keep (运动) fitness plugin."""
-from __future__ import annotations
-import json
-import os
-from pathlib import Path
-
-from ..plugin import Category, PluginMeta
-from .base import BasePlugin
-
-
-def _load_workouts(path):
+from __future__ import annotationsimport jsonimport osfrom pathlib import Pathfrom ..plugin import Category, PluginMetafrom .base import BasePlugindef _load_workouts(path):
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     if isinstance(data, dict):
         for k in ("workouts", "records", "data"):

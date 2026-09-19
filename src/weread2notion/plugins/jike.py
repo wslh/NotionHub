@@ -3,17 +3,7 @@
 即刻官方 API 已不再稳定开放，自托管最稳妥的方式是先把动态导出为 JSON，
 再交给本插件入库。仍保留 Cookie 字段作为「在线抓取」的可选说明。
 """
-from __future__ import annotations
-
-import json
-import os
-from pathlib import Path
-
-from ..plugin import Category, CredentialSpec, CredentialType, PluginMeta
-from .base import BasePlugin
-
-
-class JikePlugin(BasePlugin):
+from __future__ import annotationsimport jsonimport osfrom pathlib import Pathfrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom .base import BasePluginclass JikePlugin(BasePlugin):
     DB_NAME = "即刻"
     TITLE_PROP = "摘要"
     KEY_PROP = "PostId"

@@ -5,15 +5,7 @@ registered plugin so that databases created by older versions (or by the
 now-removed NotionHub cloud workflows) get their columns normalised. Requires
 only ``NOTION_TOKEN`` + ``NOTION_PAGE`` (the global Notion connection).
 """
-from __future__ import annotations
-
-import os
-
-from ..plugin import Category, PluginMeta, SyncResult
-from .base import BasePlugin
-
-
-class FixPlugin(BasePlugin):
+from __future__ import annotationsimport osfrom ..plugin import Category, PluginMeta, SyncResultfrom .base import BasePluginclass FixPlugin(BasePlugin):
     DB_NAME = ""
     meta = PluginMeta(
         id="fix",

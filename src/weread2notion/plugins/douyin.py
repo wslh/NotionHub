@@ -1,14 +1,5 @@
 """Douyin (TikTok China) collection plugin."""
-from __future__ import annotations
-import json
-import os
-from pathlib import Path
-
-from ..plugin import Category, PluginMeta
-from .base import BasePlugin
-
-
-def _load(path):
+from __future__ import annotationsimport jsonimport osfrom pathlib import Pathfrom ..plugin import Category, PluginMetafrom .base import BasePlugindef _load(path):
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     if isinstance(data, dict):
         for k in ("videos", "awemes", "favorites", "items", "data"):

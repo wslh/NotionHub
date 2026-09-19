@@ -1,5 +1,6 @@
 """Tests for the 4 new plugin sync engines: rss, douban, telegram, netease."""
 from __future__ import annotations
+
 import json
 import os
 import tempfile
@@ -307,7 +308,7 @@ def test_netease_sync_creates(monkeypatch, tmp_path):
     notion = FakeNotion()
     result = run_plugin(NeteasePlugin(), notion, settings=object())
     assert result.synced == 2
-    assert notion.created[0][0] == "\u8d5b\u516c\u4f53\u9a8c\u6b4c\u5355"
+    assert notion.created[0][0] == "\u7f51\u6613\u4e91\u97f3\u4e50\u6b4c\u5355"
     raws = [r[1] for r in notion.created]
     assert raws[0]["\u6b4c\u624b"] == "Solo"
     assert raws[1]["\u6b4c\u624b"] == "A1 / A2"
@@ -319,6 +320,6 @@ def test_netease_updates_existing(monkeypatch, tmp_path):
     p.write_text(json.dumps([{"id": 9, "name": "Song", "artists": "A", "album": "X", "duration": 100}]), encoding="utf-8")
     monkeypatch.setenv("NETEASE_PLAYLIST", str(p))
     notion = FakeNotion()
-    notion.existing[("\u8d5b\u516c\u4f53\u9a8c\u6b4c\u5355", "SongId", "9")] = {"id": "p9"}
+    notion.existing[("\u7f51\u6613\u4e91\u97f3\u4e50\u6b4c\u5355", "SongId", "9")] = {"id": "p9"}
     run_plugin(NeteasePlugin(), notion, settings=object())
     assert any(p[0] == "pages/p9" and p[1] == "PATCH" for p in notion.patched)

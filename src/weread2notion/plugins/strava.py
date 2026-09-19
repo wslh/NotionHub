@@ -3,15 +3,7 @@
 Auth: a Strava access token (``STRAVA_TOKEN``). Paginates the activities feed.
 Docs: https://developers.strava.com/docs/reference/#api-Activities
 """
-from __future__ import annotations
-
-import os
-
-from ..plugin import Category, CredentialSpec, CredentialType, PluginMeta
-from .base import BasePlugin, http_get_json
-
-
-class StravaPlugin(BasePlugin):
+from __future__ import annotationsimport osfrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom .base import BasePlugin, http_get_jsonclass StravaPlugin(BasePlugin):
     DB_NAME = "Strava 运动记录"
     TITLE_PROP = "活动"
     KEY_PROP = "ActivityId"

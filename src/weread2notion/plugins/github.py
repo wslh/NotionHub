@@ -1,14 +1,5 @@
 """GitHub Stars plugin: fetches the authenticated user starred repos into Notion."""
-from __future__ import annotations
-import os
-from typing import Any
-
-import requests
-
-from ..plugin import Category, PluginMeta, CredentialSpec, CredentialType
-from .base import BasePlugin
-
-_API = "https://api.github.com/user/starred"
+from __future__ import annotationsimport osfrom typing import Anyimport requestsfrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom .base import BasePlugin_API = "https://api.github.com/user/starred"
 
 
 def _fetch_stars(token: str) -> list[dict[str, Any]]:

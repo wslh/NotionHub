@@ -6,7 +6,6 @@ from typing import Any
 
 import requests
 
-
 GATEWAY_URL = "https://i.weread.qq.com/api/agent/gateway"
 
 

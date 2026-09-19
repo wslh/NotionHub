@@ -1,32 +1,4 @@
-﻿from __future__ import annotations
-
-import json
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Iterable
-
-from notion_client import Client
-
-from .blocks import get_callout
-from .config import ConfigError
-from .notion_diff import (
-    READ_ONLY_KINDS,
-    compute_changed_properties,
-    plain_property_value,
-    same_value,
-)
-from .notion_http import list_children_blocks, request_with_retry
-from .notion_text import chunks, text_value
-from .template import (
-    REQUIRED_DATABASES,
-    SETTINGS_DATABASE,
-    SETTINGS_TITLE,
-    SNAPSHOTS_DATABASE,
-    SNAPSHOTS_PROPERTIES,
-)
-
-
-# 模块级工具函数：从 notion_text 重新导出，保持 ``from weread2notion.notion
+﻿from __future__ import annotationsimport jsonfrom datetime import datetimefrom pathlib import Pathfrom typing import Any, Iterablefrom notion_client import Clientfrom .blocks import get_calloutfrom .config import ConfigErrorfrom .notion_diff import (    READ_ONLY_KINDS,    compute_changed_properties,    plain_property_value,    same_value,)from .notion_http import list_children_blocks, request_with_retryfrom .notion_text import chunks, text_valuefrom .template import (    REQUIRED_DATABASES,    SETTINGS_DATABASE,    SETTINGS_TITLE,    SNAPSHOTS_DATABASE,    SNAPSHOTS_PROPERTIES,)# 模块级工具函数：从 notion_text 重新导出，保持 ``from weread2notion.notion
 # import text_value`` 之类的旧导入路径仍然可用。
 __all__ = ["NotionWorkspace", "chunks", "text_value", "READ_ONLY_KINDS"]
 

@@ -5,16 +5,7 @@ to the path of a result.json file. Each message is written to the Notion
 "收藏的消息" database.
 Text entities (bold/italic/links) are flattened to plain text.
 """
-from __future__ import annotations
-import json
-import os
-from pathlib import Path
-
-from ..plugin import Category, PluginMeta
-from .base import BasePlugin
-
-
-def _flatten_text(value):
+from __future__ import annotationsimport jsonimport osfrom pathlib import Pathfrom ..plugin import Category, PluginMetafrom .base import BasePlugindef _flatten_text(value):
     if isinstance(value, str):
         return value
     if isinstance(value, list):

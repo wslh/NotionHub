@@ -4,16 +4,7 @@ Auth: a Spotify OAuth access token (``SPOTIFY_TOKEN``), or client-credentials
 (``SPOTIFY_CLIENT_ID`` + ``SPOTIFY_CLIENT_SECRET``) which mints a token on the fly.
 Docs: https://developer.spotify.com/documentation/web-api
 """
-from __future__ import annotations
-
-import os
-import time
-
-from ..plugin import Category, CredentialSpec, CredentialType, PluginMeta
-from .base import BasePlugin, http_get_json
-
-
-def _get_token() -> str | None:
+from __future__ import annotationsimport osfrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom .base import BasePlugin, http_get_jsondef _get_token() -> str | None:
     token = (os.getenv("SPOTIFY_TOKEN") or "").strip()
     if token:
         return token

@@ -4,17 +4,7 @@ Uses the public m.weibo.cn container endpoint (no official API key required).
 Set ``WEIBO_UID`` to the numeric user id; optionally ``WEIBO_COOKIE`` to raise
 rate-limit headroom. Docs: https://m.weibo.cn/
 """
-from __future__ import annotations
-
-import os
-import re
-
-from ..plugin import Category, CredentialSpec, CredentialType, PluginMeta
-from .base import BasePlugin, http_get_json
-from ..utils import strip_html
-
-
-def _parse_date(text: str) -> str | None:
+from __future__ import annotationsimport osimport refrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom ..utils import strip_htmlfrom .base import BasePlugin, http_get_jsondef _parse_date(text: str) -> str | None:
     m = re.search(r"(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})", text or "")
     if m:
         return m.group(1).replace(" ", "T") + "+08:00"

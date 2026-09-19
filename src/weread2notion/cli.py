@@ -9,19 +9,19 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from .analytics import reading_insights
 from .config import ConfigError, Settings
 from .export import export_books, export_snapshots
 from .logging_utils import setup_logging
 from .notion import NotionWorkspace
-from .analytics import reading_insights
+from .plugin import PluginContext
+from .registry import build_default_registry
 from .repair import Repair
+from .runner import run_plugin
 from .sources import build_source
 from .status import workspace_status
 from .sync import SYNC_VERSION, Synchronizer
 from .telemetry import send
-from .registry import build_default_registry
-from .runner import run_plugin
-from .plugin import PluginContext
 from .weread import WeReadClient
 
 log = logging.getLogger(__name__)

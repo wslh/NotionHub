@@ -1,15 +1,5 @@
 """Flomo plugin: parses Flomo note export (JSON) and writes to a Notion database."""
-from __future__ import annotations
-import json
-import os
-from pathlib import Path
-
-from ..plugin import Category, PluginMeta
-from .base import BasePlugin
-from ..utils import strip_html
-
-
-def _load_memos(path: Path) -> list[dict]:
+from __future__ import annotationsimport jsonimport osfrom pathlib import Pathfrom ..plugin import Category, PluginMetafrom ..utils import strip_htmlfrom .base import BasePlugindef _load_memos(path: Path) -> list[dict]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(data, dict) and "memos" in data:
         return data["memos"]

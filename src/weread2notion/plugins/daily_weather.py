@@ -3,14 +3,7 @@
 Open-Meteo is free and key-less. Set ``DAILY_WEATHER_LOCATION`` to "lat,lon".
 Docs: https://open-meteo.com/
 """
-from __future__ import annotations
-
-import os
-
-from ..plugin import Category, CredentialSpec, CredentialType, PluginMeta
-from .base import BasePlugin, http_get_json
-
-_WMO = {
+from __future__ import annotationsimport osfrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom .base import BasePlugin, http_get_json_WMO = {
     0: "晴", 1: "大致晴朗", 2: "局部多云", 3: "阴",
     45: "雾", 48: "雾凇", 51: "小毛雨", 53: "毛雨", 55: "大毛雨",
     61: "小雨", 63: "中雨", 65: "大雨", 71: "小雪", 73: "中雪", 75: "大雪",

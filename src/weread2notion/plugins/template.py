@@ -20,18 +20,7 @@
 - ``parse_date_to_iso(value)`` —— 同上，但返回 ISO 8601 字符串。
 - ``parse_kindle_clipping_date(meta)`` —— 解析 Kindle 标注元数据行（兼容中英文界面）。
 """
-from __future__ import annotations
-
-import os
-from datetime import datetime
-from pathlib import Path
-
-from ..plugin import Category, PluginMeta
-from ..utils import parse_date_to_timestamp, strip_html
-from .base import BasePlugin
-
-
-class TemplatePlugin(BasePlugin):
+from __future__ import annotationsimport osfrom datetime import datetimefrom pathlib import Pathfrom ..plugin import Category, PluginMetafrom ..utils import parse_date_to_timestamp, strip_htmlfrom .base import BasePluginclass TemplatePlugin(BasePlugin):
     """模板插件：演示最小可用的 BasePlugin 实现。
 
     每个数据源只需把「原始数据」转成 ``(key, raw)`` 交给基类同步即可。

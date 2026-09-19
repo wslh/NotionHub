@@ -15,7 +15,6 @@ from __future__ import annotations
 
 from typing import Any
 
-
 # 这些属性由 Notion 计算或生成，永远不写入，也不参与 diff。
 READ_ONLY_KINDS = frozenset(
     {

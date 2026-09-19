@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import csv
 from pathlib import Path
-from typing import Any, Callable, Iterable
+from typing import Any, Iterable
 
 # 列顺序即属性名：Notion 属性名与导出列名一致，便于泛型映射。
 BOOK_COLUMNS = ["BookId", "书名", "作者", "分类", "阅读状态", "阅读进度", "最后阅读时间"]

@@ -4,17 +4,7 @@
 JSON，再交给本插件入库。仍保留 ``XIAOHONGSHU_COOKIE`` 作为「在线抓取」的可选
 说明（在线抓取反爬严格，需自行承担稳定性风险）。
 """
-from __future__ import annotations
-
-import json
-import os
-from pathlib import Path
-
-from ..plugin import Category, CredentialSpec, CredentialType, PluginMeta
-from .base import BasePlugin
-
-
-class XiaohongshuPlugin(BasePlugin):
+from __future__ import annotationsimport jsonimport osfrom pathlib import Pathfrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom .base import BasePluginclass XiaohongshuPlugin(BasePlugin):
     DB_NAME = "小红书笔记"
     TITLE_PROP = "标题"
     KEY_PROP = "NoteId"

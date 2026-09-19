@@ -13,7 +13,7 @@ name: weread sync
 #
 # 需要配置的 Secrets（Settings → Secrets → Actions）：
 #   WEREAD_API_KEY   微信读书 Gateway API Key（必填）
-#   NOTION_TOKEN     WeRead2Notion-AI Integration Secret（必填，须以 ntn_ 或 secret_ 开头）
+#   NOTION_TOKEN     NotionHub Integration Secret（必填，须以 ntn_ 或 secret_ 开头）
 #   NOTION_PAGE      Duplicate 后的 Notion 页面完整 URL（必填）
 #   可选：OPENAI_API_KEY（开启“生成 AI 导读”设置项时需要，未配置则自动跳过）
 

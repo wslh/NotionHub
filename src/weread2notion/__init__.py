@@ -6,9 +6,9 @@
 __version__ = "2.12.0"
 
 from .plugin import Category, Plugin, PluginContext, PluginMeta, SyncResult
+from .plugins import BUILTIN_PLUGINS
 from .registry import PluginRegistry, build_default_registry
 from .runner import run_plugin
-from .plugins import BUILTIN_PLUGINS
 
 __all__ = [
     "Category", "Plugin", "PluginContext", "PluginMeta", "SyncResult",

@@ -3,17 +3,7 @@
 古文岛没有公开 API，自托管采用本地导出 JSON 入库。导出结构通常为文章列表，
 含 id / 标题 / 作者 / 朝代 / 正文 / 时间。
 """
-from __future__ import annotations
-
-import json
-import os
-from pathlib import Path
-
-from ..plugin import Category, CredentialSpec, CredentialType, PluginMeta
-from .base import BasePlugin
-
-
-class GuwendaoPlugin(BasePlugin):
+from __future__ import annotationsimport jsonimport osfrom pathlib import Pathfrom ..plugin import Category, CredentialSpec, CredentialType, PluginMetafrom .base import BasePluginclass GuwendaoPlugin(BasePlugin):
     DB_NAME = "古文岛"
     TITLE_PROP = "篇名"
     KEY_PROP = "Id"

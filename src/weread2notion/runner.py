@@ -1,6 +1,8 @@
 """Plugin runner: builds context, schedules a plugin, aggregates results."""
 from __future__ import annotations
+
 import logging
+
 from .plugin import Plugin, PluginContext, SyncResult
 
 log = logging.getLogger(__name__)
