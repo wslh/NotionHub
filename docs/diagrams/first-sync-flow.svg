@@ -1,84 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 820" font-family="-apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
-  <!-- 背景 -->
-  <rect width="680" height="820" fill="#ffffff"/>
-  <text x="340" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1a365d">NotionHub · 从零到首次同步</text>
-  <text x="340" y="62" text-anchor="middle" font-size="13" fill="#718096">以 GitHub Actions 自动同步为例（本机 CLI / 浏览器扩展路径见《使用指南》）</text>
-
-  <!-- 通用样式：圆角矩形节点 -->
-  <!-- 1 -->
-  <rect x="130" y="86" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
-  <text x="340" y="110" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">① 复制 Notion 模板页面</text>
-  <text x="340" y="130" text-anchor="middle" font-size="12" fill="#4a5568">打开模板 → 右上角 Duplicate → 保存新页面 URL</text>
-
-  <!-- 箭头 -->
-  <line x1="340" y1="144" x2="340" y2="166" stroke="#a0aec0" stroke-width="2"/>
-  <polygon points="340,172 334,162 346,162" fill="#a0aec0"/>
-
-  <!-- 2 -->
-  <rect x="130" y="172" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
-  <text x="340" y="196" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">② 创建 Notion Integration 并连页面</text>
-  <text x="340" y="216" text-anchor="middle" font-size="12" fill="#4a5568">命名 WeRead2Notion-AI → 开启读写权限 → 页面 ••• → Connections 添加</text>
-
-  <line x1="340" y1="230" x2="340" y2="252" stroke="#a0aec0" stroke-width="2"/>
-  <polygon points="340,258 334,248 346,248" fill="#a0aec0"/>
-
-  <!-- 3 -->
-  <rect x="130" y="258" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
-  <text x="340" y="282" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">③ 获取微信读书 API Key</text>
-  <text x="340" y="302" text-anchor="middle" font-size="12" fill="#4a5568">微信读书助手 → 复制 wrk_ 开头的 Gateway Key</text>
-
-  <line x1="340" y1="316" x2="340" y2="338" stroke="#a0aec0" stroke-width="2"/>
-  <polygon points="340,344 334,334 346,334" fill="#a0aec0"/>
-
-  <!-- 4 -->
-  <rect x="130" y="344" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
-  <text x="340" y="368" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">④ Fork 仓库到你的 GitHub</text>
-  <text x="340" y="388" text-anchor="middle" font-size="12" fill="#4a5568">右上角 Fork → 得到你的私有副本仓库</text>
-
-  <line x1="340" y1="402" x2="340" y2="424" stroke="#a0aec0" stroke-width="2"/>
-  <polygon points="340,430 334,420 346,420" fill="#a0aec0"/>
-
-  <!-- 5 -->
-  <rect x="130" y="430" width="420" height="64" rx="10" fill="#e6fffa" stroke="#319795" stroke-width="1.5"/>
-  <text x="340" y="454" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">⑤ 配置三个 Repository Secrets</text>
-  <text x="340" y="474" text-anchor="middle" font-size="12" fill="#4a5568">WEREAD_API_KEY / NOTION_TOKEN / NOTION_PAGE</text>
-  <text x="340" y="490" text-anchor="middle" font-size="11" fill="#718096">Settings → Secrets and variables → Actions → New repository secret</text>
-
-  <line x1="340" y1="494" x2="340" y2="516" stroke="#a0aec0" stroke-width="2"/>
-  <polygon points="340,522 334,512 346,512" fill="#a0aec0"/>
-
-  <!-- 6 -->
-  <rect x="130" y="522" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
-  <text x="340" y="546" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">⑥ 运行 Actions · weread sync</text>
-  <text x="340" y="566" text-anchor="middle" font-size="12" fill="#4a5568">Actions → weread sync → Run workflow（首测保持 full 未勾选）</text>
-
-  <!-- 判定菱形 -->
-  <line x1="340" y1="580" x2="340" y2="606" stroke="#a0aec0" stroke-width="2"/>
-  <polygon points="340,612 334,602 346,602" fill="#a0aec0"/>
-  <polygon points="340,690 470,628 340,566 210,628" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.5"/>
-  <text x="340" y="622" text-anchor="middle" font-size="14" font-weight="600" fill="#9c4221">同步成功？</text>
-
-  <!-- 成功分支（右/下） -->
-  <line x1="470" y1="628" x2="560" y2="628" stroke="#38a169" stroke-width="2"/>
-  <polygon points="566,628 556,623 556,633" fill="#38a169"/>
-  <rect x="500" y="600" width="170" height="56" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="1.5"/>
-  <text x="585" y="622" text-anchor="middle" font-size="13" font-weight="600" fill="#22543d">刷新 Notion 看数据</text>
-  <text x="585" y="642" text-anchor="middle" font-size="12" fill="#2f855a">书架/进度/统计/划线</text>
-
-  <line x1="340" y1="690" x2="340" y2="712" stroke="#38a169" stroke-width="2"/>
-  <polygon points="340,718 334,708 346,708" fill="#38a169"/>
-  <rect x="130" y="718" width="420" height="56" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="1.5"/>
-  <text x="340" y="742" text-anchor="middle" font-size="14" font-weight="600" fill="#22543d">每日自动同步（无需再操作）</text>
-  <text x="340" y="762" text-anchor="middle" font-size="12" fill="#2f855a">weread.yml 默认每日北京时间 04:00 · 或手动 Run workflow</text>
-
-  <!-- 失败分支（左/下） -->
-  <line x1="210" y1="628" x2="120" y2="628" stroke="#e53e3e" stroke-width="2"/>
-  <polygon points="114,628 124,623 124,633" fill="#e53e3e"/>
-  <rect x="0" y="600" width="170" height="56" rx="10" fill="#fff5f5" stroke="#e53e3e" stroke-width="1.5"/>
-  <text x="85" y="622" text-anchor="middle" font-size="13" font-weight="600" fill="#742a2a">查看常见问题</text>
-  <text x="85" y="642" text-anchor="middle" font-size="12" fill="#c53030">Could not find block?</text>
-
-  <line x1="85" y1="656" x2="85" y2="690" stroke="#e53e3e" stroke-width="2" stroke-dasharray="4 3"/>
-  <polygon points="85,696 79,686 91,686" fill="#e53e3e"/>
-  <text x="85" y="716" text-anchor="middle" font-size="12" fill="#c53030">修订 Secrets/连接 → 重跑 ⑥</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 820" font-family="-apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <!-- 背景 -->
+  <rect width="680" height="820" fill="#ffffff"/>
+  <text x="340" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1a365d">NotionHub · 从零到首次同步</text>
+  <text x="340" y="62" text-anchor="middle" font-size="13" fill="#718096">以 GitHub Actions 自动同步为例（本机 CLI / 浏览器扩展路径见《使用指南》）</text>
+
+  <!-- 通用样式：圆角矩形节点 -->
+  <!-- 1 -->
+  <rect x="130" y="86" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="110" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">① 复制 Notion 模板页面</text>
+  <text x="340" y="130" text-anchor="middle" font-size="12" fill="#4a5568">打开模板 → 右上角 Duplicate → 保存新页面 URL</text>
+
+  <!-- 箭头 -->
+  <line x1="340" y1="144" x2="340" y2="166" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,172 334,162 346,162" fill="#a0aec0"/>
+
+  <!-- 2 -->
+  <rect x="130" y="172" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="196" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">② 创建 Notion Integration 并连页面</text>
+  <text x="340" y="216" text-anchor="middle" font-size="12" fill="#4a5568">命名 NotionHub → 开启读写权限 → 页面 ••• → Connections 添加</text>
+
+  <line x1="340" y1="230" x2="340" y2="252" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,258 334,248 346,248" fill="#a0aec0"/>
+
+  <!-- 3 -->
+  <rect x="130" y="258" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="282" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">③ 获取微信读书 API Key</text>
+  <text x="340" y="302" text-anchor="middle" font-size="12" fill="#4a5568">微信读书助手 → 复制 wrk_ 开头的 Gateway Key</text>
+
+  <line x1="340" y1="316" x2="340" y2="338" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,344 334,334 346,334" fill="#a0aec0"/>
+
+  <!-- 4 -->
+  <rect x="130" y="344" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="368" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">④ Fork 仓库到你的 GitHub</text>
+  <text x="340" y="388" text-anchor="middle" font-size="12" fill="#4a5568">右上角 Fork → 得到你的私有副本仓库</text>
+
+  <line x1="340" y1="402" x2="340" y2="424" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,430 334,420 346,420" fill="#a0aec0"/>
+
+  <!-- 5 -->
+  <rect x="130" y="430" width="420" height="64" rx="10" fill="#e6fffa" stroke="#319795" stroke-width="1.5"/>
+  <text x="340" y="454" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">⑤ 配置三个 Repository Secrets</text>
+  <text x="340" y="474" text-anchor="middle" font-size="12" fill="#4a5568">WEREAD_API_KEY / NOTION_TOKEN / NOTION_PAGE</text>
+  <text x="340" y="490" text-anchor="middle" font-size="11" fill="#718096">Settings → Secrets and variables → Actions → New repository secret</text>
+
+  <line x1="340" y1="494" x2="340" y2="516" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,522 334,512 346,512" fill="#a0aec0"/>
+
+  <!-- 6 -->
+  <rect x="130" y="522" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="546" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">⑥ 运行 Actions · weread sync</text>
+  <text x="340" y="566" text-anchor="middle" font-size="12" fill="#4a5568">Actions → weread sync → Run workflow（首测保持 full 未勾选）</text>
+
+  <!-- 判定菱形 -->
+  <line x1="340" y1="580" x2="340" y2="606" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,612 334,602 346,602" fill="#a0aec0"/>
+  <polygon points="340,690 470,628 340,566 210,628" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.5"/>
+  <text x="340" y="622" text-anchor="middle" font-size="14" font-weight="600" fill="#9c4221">同步成功？</text>
+
+  <!-- 成功分支（右/下） -->
+  <line x1="470" y1="628" x2="560" y2="628" stroke="#38a169" stroke-width="2"/>
+  <polygon points="566,628 556,623 556,633" fill="#38a169"/>
+  <rect x="500" y="600" width="170" height="56" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="1.5"/>
+  <text x="585" y="622" text-anchor="middle" font-size="13" font-weight="600" fill="#22543d">刷新 Notion 看数据</text>
+  <text x="585" y="642" text-anchor="middle" font-size="12" fill="#2f855a">书架/进度/统计/划线</text>
+
+  <line x1="340" y1="690" x2="340" y2="712" stroke="#38a169" stroke-width="2"/>
+  <polygon points="340,718 334,708 346,708" fill="#38a169"/>
+  <rect x="130" y="718" width="420" height="56" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="1.5"/>
+  <text x="340" y="742" text-anchor="middle" font-size="14" font-weight="600" fill="#22543d">每日自动同步（无需再操作）</text>
+  <text x="340" y="762" text-anchor="middle" font-size="12" fill="#2f855a">weread.yml 默认每日北京时间 04:00 · 或手动 Run workflow</text>
+
+  <!-- 失败分支（左/下） -->
+  <line x1="210" y1="628" x2="120" y2="628" stroke="#e53e3e" stroke-width="2"/>
+  <polygon points="114,628 124,623 124,633" fill="#e53e3e"/>
+  <rect x="0" y="600" width="170" height="56" rx="10" fill="#fff5f5" stroke="#e53e3e" stroke-width="1.5"/>
+  <text x="85" y="622" text-anchor="middle" font-size="13" font-weight="600" fill="#742a2a">查看常见问题</text>
+  <text x="85" y="642" text-anchor="middle" font-size="12" fill="#c53030">Could not find block?</text>
+
+  <line x1="85" y1="656" x2="85" y2="690" stroke="#e53e3e" stroke-width="2" stroke-dasharray="4 3"/>
+  <polygon points="85,696 79,686 91,686" fill="#e53e3e"/>
+  <text x="85" y="716" text-anchor="middle" font-size="12" fill="#c53030">修订 Secrets/连接 → 重跑 ⑥</text>
+</svg>

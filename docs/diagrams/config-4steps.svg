@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 620" font-family="-apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <!-- 背景 -->
+  <rect width="680" height="620" fill="#ffffff"/>
+  <text x="340" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1a365d">NotionHub · 首次配置四步法</text>
+  <text x="340" y="62" text-anchor="middle" font-size="13" fill="#718096">无论用 GitHub Actions / 本机 CLI / 浏览器扩展，都必须先完成这四步</text>
+
+  <!-- 1 -->
+  <rect x="130" y="86" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="110" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">① 复制 Notion 模板页面</text>
+  <text x="340" y="130" text-anchor="middle" font-size="12" fill="#4a5568">打开模板 → 右上角 Duplicate → 保存新页面 URL</text>
+
+  <line x1="340" y1="144" x2="340" y2="166" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,172 334,162 346,162" fill="#a0aec0"/>
+
+  <!-- 2 -->
+  <rect x="130" y="172" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="196" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">② 创建并连接 Notion Integration</text>
+  <text x="340" y="216" text-anchor="middle" font-size="12" fill="#4a5568">命名 NotionHub · 开读写权限 · 页面 ••• → Connections 添加</text>
+
+  <line x1="340" y1="230" x2="340" y2="252" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,258 334,248 346,248" fill="#a0aec0"/>
+
+  <!-- 3 -->
+  <rect x="130" y="258" width="420" height="64" rx="10" fill="#e6fffa" stroke="#319795" stroke-width="1.5"/>
+  <text x="340" y="282" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">③ 准备凭证</text>
+  <text x="340" y="302" text-anchor="middle" font-size="12" fill="#4a5568">WEREAD_API_KEY / NOTION_TOKEN / NOTION_PAGE</text>
+  <text x="340" y="318" text-anchor="middle" font-size="11" fill="#718096">本机 .env 或 GitHub Secrets（二者选一，变量名相同）</text>
+
+  <line x1="340" y1="322" x2="340" y2="344" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,350 334,340 346,340" fill="#a0aec0"/>
+
+  <!-- 4 -->
+  <rect x="130" y="350" width="420" height="58" rx="10" fill="#e6fffa" stroke="#319795" stroke-width="1.5"/>
+  <text x="340" y="374" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">④ 跑一次同步验证</text>
+  <text x="340" y="394" text-anchor="middle" font-size="12" fill="#4a5568">Actions · weread sync · Run workflow（首测不勾 full）/ 本机 notionhub sync</text>
+
+  <!-- 判定菱形 -->
+  <line x1="340" y1="408" x2="340" y2="430" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,436 334,426 346,426" fill="#a0aec0"/>
+  <polygon points="340,508 410,470 340,432 270,470" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.5"/>
+  <text x="340" y="475" text-anchor="middle" font-size="14" font-weight="600" fill="#9c4221">同步成功？</text>
+
+  <!-- 成功分支（下） -->
+  <line x1="340" y1="508" x2="340" y2="530" stroke="#38a169" stroke-width="2"/>
+  <polygon points="340,536 334,526 346,526" fill="#38a169"/>
+  <rect x="130" y="536" width="420" height="56" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="1.5"/>
+  <text x="340" y="560" text-anchor="middle" font-size="14" font-weight="600" fill="#22543d">数据已同步到 Notion</text>
+  <text x="340" y="580" text-anchor="middle" font-size="12" fill="#2f855a">书架 / 进度 / 统计 / 划线按章节进入各书</text>
+
+  <!-- 失败分支（左） -->
+  <line x1="270" y1="470" x2="180" y2="470" stroke="#e53e3e" stroke-width="2"/>
+  <polygon points="174,470 184,465 184,475" fill="#e53e3e"/>
+  <rect x="10" y="442" width="170" height="56" rx="10" fill="#fff5f5" stroke="#e53e3e" stroke-width="1.5"/>
+  <text x="95" y="464" text-anchor="middle" font-size="13" font-weight="600" fill="#742a2a">查看常见问题</text>
+  <text x="95" y="484" text-anchor="middle" font-size="11" fill="#c53030">修订 Secrets/连接 → 重跑 ④</text>
+
+  <!-- 失败回退虚线（回到第 4 步左侧） -->
+  <polyline points="95,442 95,379 130,379" fill="none" stroke="#e53e3e" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <polygon points="130,379 119,375 121,385" fill="#e53e3e"/>
+</svg>

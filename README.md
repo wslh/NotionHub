@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="asset/weread2notion-banner.svg" alt="WeRead2Notion AI" width="100%">
+  <img src="asset/weread2notion-banner.svg" alt="NotionHub" width="100%">
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
 
 # NotionHub
 
-> 本项目基于 [hodgekou/notionHub](https://github.com/hodgekou/notionhub) 派生修改并独立发布（当前仓库：`wslh/NotionHub`），遵循其开源许可证，原作者保留相关版权。
+> 本项目基于 [hodgekou/notionhub](https://github.com/hodgekou/notionhub) 派生修改并独立发布（当前仓库：`wslh/NotionHub`），遵循其开源许可证，原作者保留相关版权。
 
 > **永久免费、完整开源。** 将你的微信读书书架、阅读进度、章节、划线、个人想法和阅读统计，自动同步到一套完整的 Notion 阅读管理模板。
 
@@ -30,7 +30,7 @@
 
 <p align="center">
   <a href="https://app.notion.com/p/wph/Template-3a329affe5af800b8581f98b71e948fb">
-    <img src="asset/notion-dashboard.png" alt="WeRead2Notion AI 同步后的 Notion 阅读仪表盘" width="100%">
+    <img src="asset/notion-dashboard.png" alt="NotionHub 同步后的 Notion 阅读仪表盘" width="100%">
   </a>
 </p>
 
@@ -54,7 +54,7 @@
 
 打开下面的模板页面，然后点击右上角的 `Duplicate`，将它复制到你自己的 Notion Workspace：
 
-[复制 WeRead2Notion AI Template](https://app.notion.com/p/wph/Template-3a329affe5af800b8581f98b71e948fb)
+[复制 NotionHub Template](https://app.notion.com/p/wph/Template-3a329affe5af800b8581f98b71e948fb)
 
 复制完成后，请保存新页面的完整 URL。后面配置 `NOTION_PAGE` 时会用到它。
 
@@ -64,14 +64,14 @@
 
 1. 打开 [Notion Integrations](https://www.notion.so/profile/integrations)。
 2. 点击 `New integration`。
-3. 名称填写 `WeRead2Notion-AI`。
+3. 名称填写 `NotionHub`。
 4. Workspace 选择刚才复制模板所在的 Workspace。
 5. 在 Capabilities 中启用：
    - `Read content`
    - `Insert content`
    - `Update content`
 6. 保存并复制生成的 Internal Integration Secret，后面将它配置为 `NOTION_TOKEN`。
-7. 返回 Duplicate 后的 Notion 页面，点击右上角 `••• → Connections`，添加 `WeRead2Notion-AI`。
+7. 返回 Duplicate 后的 Notion 页面，点击右上角 `••• → Connections`，添加 `NotionHub`。
 
 Integration 必须连接到最外层的“微信读书”模板页面，这样才能访问页面内的书架和统计数据库，以及各书籍页面中的章节化划线与笔记。
 
@@ -88,7 +88,7 @@ Integration 必须连接到最外层的“微信读书”模板页面，这样�
 | Secret 名称 | 填写内容 |
 | --- | --- |
 | `WEREAD_API_KEY` | 你的微信读书 Gateway API Key，可前往 [微信读书助手](https://weread.qq.com/r/weread-skills) 获取 |
-| `NOTION_TOKEN` | 第二步创建的 `WeRead2Notion-AI` Integration Secret |
+| `NOTION_TOKEN` | 第二步创建的 `NotionHub` Integration Secret |
 | `NOTION_PAGE` | 第一步 Duplicate 后的新 Notion 页面完整 URL |
 
 Secret 名称必须完全一致，并注意以下对应关系：
@@ -254,11 +254,11 @@ powershell -ExecutionPolicy Bypass -File native\uninstall.ps1 # 卸载
 
 ## 注意：同步内容可能覆盖 Notion 中的手动修改
 
-WeRead2Notion 会把微信读书作为同步数据的来源。下列内容由同步器管理，如果你直接在 Notion 中修改，后续普通同步或全量同步可能使用微信读书返回的数据重新更新或覆盖：
+NotionHub 会把微信读书作为同步数据的来源。下列内容由同步器管理，如果你直接在 Notion 中修改，后续普通同步或全量同步可能使用微信读书返回的数据重新更新或覆盖：
 
 - 书架数据库中的书名、作者、分类、阅读状态、阅读进度、阅读时间等同步属性
 - 日、周、月、年等阅读统计数据
-- 书籍页面中标记为“由 WeRead2Notion 自动同步”的划线和笔记区域
+- 书籍页面中标记为“由 NotionHub 自动同步”的划线和笔记区域
 - `同步配置版本（不可删除）` 系统字段
 
 你自行添加在自动同步区域之外的普通页面内容，普通增量同步会尽量保留；模板主页的布局、分栏、数据库视图、筛选、排序和图表也不会被同步器重写。但 `full` 全量同步会备份并归档旧数据库记录，再重新创建记录，因此不要把需要长期保留的私人内容只存放在这些自动管理的数据库记录中。
@@ -291,13 +291,13 @@ WeRead2Notion 会把微信读书作为同步数据的来源。下列内容由同
 请检查：
 
 - `NOTION_PAGE` 是否为 Duplicate 后的新页面 URL。
-- 页面右上角 `••• → Connections` 中是否已经添加 `WeRead2Notion-AI`。
+- 页面右上角 `••• → Connections` 中是否已经添加 `NotionHub`。
 - GitHub 的 `NOTION_TOKEN` 是否属于该 Integration。
 - Integration 和 Notion 页面是否位于同一个 Workspace。
 
 ### 日志显示了其他 Integration 名称
 
-日志中的名称由 `NOTION_TOKEN` 决定，与 GitHub 仓库名称无关。请将 `NOTION_TOKEN` 替换为你自己创建的 `WeRead2Notion-AI` Integration Secret。
+日志中的名称由 `NOTION_TOKEN` 决定，与 GitHub 仓库名称无关。请将 `NOTION_TOKEN` 替换为你自己创建的 `NotionHub` Integration Secret。
 
 ### “全部”视图没有数据
 
