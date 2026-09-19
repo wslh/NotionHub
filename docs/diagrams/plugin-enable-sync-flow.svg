@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 790" font-family="-apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <!-- 背景 -->
+  <rect width="680" height="790" fill="#ffffff"/>
+  <text x="340" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1a365d">NotionHub · 插件启用与同步</text>
+  <text x="340" y="62" text-anchor="middle" font-size="13" fill="#718096">以 Flomo 为例，其它 32 个数据源插件同理（见图右侧「凭证一览」）</text>
+
+  <!-- 1 -->
+  <rect x="130" y="86" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="110" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">① 选定要接入的数据源</text>
+  <text x="340" y="130" text-anchor="middle" font-size="12" fill="#4a5568">例如 Flomo / GitHub / 豆瓣 / RSS / 网易云 / 小宇宙…（见《使用指南》第 5 节）</text>
+
+  <line x1="340" y1="144" x2="340" y2="166" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,172 334,162 346,162" fill="#a0aec0"/>
+
+  <!-- 2 -->
+  <rect x="130" y="172" width="420" height="58" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5"/>
+  <text x="340" y="196" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">② 查它要什么凭证</text>
+  <text x="340" y="216" text-anchor="middle" font-size="12" fill="#4a5568">notionhub credentials list  或  notionhub plugins info flomo</text>
+
+  <line x1="340" y1="230" x2="340" y2="252" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,258 334,248 346,248" fill="#a0aec0"/>
+
+  <!-- 3 -->
+  <rect x="130" y="258" width="420" height="64" rx="10" fill="#e6fffa" stroke="#319795" stroke-width="1.5"/>
+  <text x="340" y="282" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">③ 填写凭证</text>
+  <text x="340" y="302" text-anchor="middle" font-size="12" fill="#4a5568">本机 .env：FLOMO_EXPORT=/绝对路径/flomo.json</text>
+  <text x="340" y="318" text-anchor="middle" font-size="11" fill="#718096">或 GitHub Secrets 建同名 secret（变量名见 credentials list）</text>
+
+  <line x1="340" y1="322" x2="340" y2="344" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,350 334,340 346,340" fill="#a0aec0"/>
+
+  <!-- 4 -->
+  <rect x="130" y="350" width="420" height="58" rx="10" fill="#e6fffa" stroke="#319795" stroke-width="1.5"/>
+  <text x="340" y="374" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">④ 校验凭证格式</text>
+  <text x="340" y="394" text-anchor="middle" font-size="12" fill="#4a5568">notionhub credentials verify flomo</text>
+
+  <!-- 判定菱形：凭证正确？ -->
+  <line x1="340" y1="408" x2="340" y2="434" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,440 334,430 346,430" fill="#a0aec0"/>
+  <polygon points="340,518 410,476 340,434 270,476" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.5"/>
+  <text x="340" y="481" text-anchor="middle" font-size="14" font-weight="600" fill="#9c4221">凭证正确？</text>
+
+  <!-- 否分支（左） -->
+  <line x1="270" y1="476" x2="180" y2="476" stroke="#e53e3e" stroke-width="2"/>
+  <polygon points="174,476 184,471 184,481" fill="#e53e3e"/>
+  <rect x="10" y="448" width="170" height="56" rx="10" fill="#fff5f5" stroke="#e53e3e" stroke-width="1.5"/>
+  <text x="95" y="470" text-anchor="middle" font-size="13" font-weight="600" fill="#742a2a">回到 ③ 补凭证</text>
+  <text x="95" y="490" text-anchor="middle" font-size="12" fill="#c53030">路径/格式/Secret 有误</text>
+  <polyline points="95,504 60,504 60,290 130,290" fill="none" stroke="#e53e3e" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <polygon points="130,290 120,286 122,296" fill="#e53e3e"/>
+
+  <!-- 是分支（下） -->
+  <line x1="340" y1="518" x2="340" y2="540" stroke="#38a169" stroke-width="2"/>
+  <polygon points="340,546 334,536 346,536" fill="#38a169"/>
+
+  <!-- 5 -->
+  <rect x="130" y="546" width="420" height="58" rx="10" fill="#e6fffa" stroke="#319795" stroke-width="1.5"/>
+  <text x="340" y="570" text-anchor="middle" font-size="15" font-weight="600" fill="#1a365d">⑤ 运行同步</text>
+  <text x="340" y="590" text-anchor="middle" font-size="12" fill="#4a5568">notionhub plugins sync flomo   （或 plugins sync --all 同步全部已配置）</text>
+
+  <!-- 判定菱形：同步成功？ -->
+  <line x1="340" y1="604" x2="340" y2="630" stroke="#a0aec0" stroke-width="2"/>
+  <polygon points="340,636 334,626 346,626" fill="#a0aec0"/>
+  <polygon points="340,714 410,672 340,630 270,672" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.5"/>
+  <text x="340" y="677" text-anchor="middle" font-size="14" font-weight="600" fill="#9c4221">同步成功？</text>
+
+  <!-- 否分支（左） -->
+  <line x1="270" y1="672" x2="180" y2="672" stroke="#e53e3e" stroke-width="2"/>
+  <polygon points="174,672 184,667 184,677" fill="#e53e3e"/>
+  <rect x="10" y="644" width="170" height="56" rx="10" fill="#fff5f5" stroke="#e53e3e" stroke-width="1.5"/>
+  <text x="95" y="666" text-anchor="middle" font-size="13" font-weight="600" fill="#742a2a">查日志 / 重跑 verify</text>
+  <text x="95" y="686" text-anchor="middle" font-size="12" fill="#c53030">看控制台报错定位</text>
+
+  <!-- 是分支（下） -->
+  <line x1="340" y1="714" x2="340" y2="736" stroke="#38a169" stroke-width="2"/>
+  <polygon points="340,742 334,732 346,732" fill="#38a169"/>
+  <rect x="130" y="742" width="420" height="40" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="1.5"/>
+  <text x="340" y="766" text-anchor="middle" font-size="13" font-weight="600" fill="#22543d">数据进入对应 Notion 库 · GitHub Actions 每日自动同步</text>
+</svg>

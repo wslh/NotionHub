@@ -1,0 +1,44 @@
+
+*.egg-info/
+*.py[cod]
+.env
+.venv/
+.pytest_cache/
+OUT_FOLDER/
+backups/
+__pycache__/
+build/
+dist/
+scripts/__pycache__/
+_w*.py
+
+# VS Code extension wrapper
+node_modules/
+*.vsix
+.vscode-test/
+
+# Browser extension packaging (Edge / Chrome)
+*.zip
+*.crx
+extension-build/
+
+# Private signing key for the fixed extension ID (do NOT commit)
+key.pem
+
+# Native bridge EXE: auto-compiled by native/install.ps1 from Bridge.cs / Json.cs
+native/NotionHubBridge.exe
+
+# Logs (runtime output; weread2notion.log can grow to 100+ MB)
+logs/
+*.log
+
+# IDE / editor caches
+.vs/
+.vscode/
+
+# Obsolete cloud-runner workflow backups (superseded by sync.yml / weread.yml)
+_bak_nh_workflows_v38/
+
+# Local pytest / test temp dirs (not part of the project)
+tmp_*/
+tmp_notionhub_pytest/

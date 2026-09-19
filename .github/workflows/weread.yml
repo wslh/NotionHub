@@ -1,0 +1,104 @@
+name: weread sync
+
+# 微信读书 → Notion 自托管同步工作流（本仓库唯一的微信读书同步链路）。
+# 使用本仓库自身的 weread2notion 包（经根目录 action.yml 封装）执行同步，
+# 不再依赖 NotionHub 生成的云端 nh-*.yml 工作流（nh-weread-free.yml / nh-weread.yml 已删除）。
+#
+# 触发方式：
+#   1) 定时：默认每天北京时间 04:00（GitHub cron 用 UTC，即 20:00 UTC 前一日）。
+#      GitHub 定时任务可能延迟几分钟到几十分钟，属正常现象。
+#   2) 手动：Actions 页面 Run workflow，可勾选 full（全量重建）并设置重试次数、verbose 与并发数。
+#   3) 外部 Webhook：repository_dispatch，event_type=weread-sync，
+#      client_payload 可传 {"full": "true"/"false", "retries": "3"}（建议用字符串）。
+#
+# 需要配置的 Secrets（Settings → Secrets → Actions）：
+#   WEREAD_API_KEY   微信读书 Gateway API Key（必填）
+#   NOTION_TOKEN     WeRead2Notion-AI Integration Secret（必填，须以 ntn_ 或 secret_ 开头）
+#   NOTION_PAGE      Duplicate 后的 Notion 页面完整 URL（必填）
+#   可选：OPENAI_API_KEY（开启“生成 AI 导读”设置项时需要，未配置则自动跳过）
+
+on:
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "备份并重建全部数据库行"
+        type: boolean
+        default: false
+      retries:
+        description: "同步失败最大尝试次数"
+        type: number
+        default: 2
+      verbose:
+        description: "开启调试日志（写入 logs/）"
+        type: boolean
+        default: false
+      concurrency:
+        description: "并发拉取书籍数（CONCURRENCY，默认 4）"
+        type: number
+        default: 4
+  repository_dispatch:
+    # Webhook 触发：外部系统可 POST 到
+    # POST /repos/<owner>/<repo>/dispatches  (event_type: weread-sync)
+    # client_payload 可传 {"full": "true", "retries": "3"}（建议用字符串），
+    # 实现微信读书更新后近实时触发同步（系统集成）。
+    types: [weread-sync]
+  schedule:
+    # GitHub Actions schedules use UTC。修改此 cron 即可调整同步频率。
+    - cron: "0 20 * * *" # 每天北京时间凌晨 04:00（UTC 20:00）
+
+# 防止同一时刻多次运行重叠：新触发会排队而非互相干扰（同步任务不互相取消）。
+concurrency:
+  group: weread-sync-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read # checkout
+  issues: write # 失败时创建 Issue 通知
+
+jobs:
+  sync:
+    name: Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: WeRead to Notion
+        uses: ./
+        with:
+          weread-api-key: ${{ secrets.WEREAD_API_KEY }}
+          notion-token: ${{ secrets.NOTION_TOKEN }}
+          notion-page: ${{ secrets.NOTION_PAGE }}
+          full: ${{ inputs.full || 'false' }}
+          retries: ${{ inputs.retries || '2' }}
+          verbose: ${{ inputs.verbose || 'false' }}
+          concurrency: ${{ inputs.concurrency || '4' }}
+      - name: Upload full-sync backup
+        if: ${{ inputs.full == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: weread2notion-backup
+          path: backups/*.json
+          if-no-files-found: error
+      - name: Notify failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const today = new Date().toISOString().slice(0, 10);
+            const title = `WeRead 同步失败（${today}）`;
+            const existing = await github.rest.issues.listForRepo({ owner, repo, state: "open" });
+            if (existing.data.some((i) => i.title === title)) {
+              core.info("今日失败通知已存在，跳过创建");
+              return;
+            }
+            await github.rest.issues.create({
+              owner,
+              repo,
+              title,
+              body:
+                "自动同步在最近一次运行中失败，请检查 Actions 日志。\n\n" +
+                "恢复方式：下载全量备份产物后运行 `weread2notion restore <备份文件>` 取消归档被回收的页面，" +
+                "或重新手动触发同步（Run workflow）。",
+              labels: ["sync-failure"],
+            });

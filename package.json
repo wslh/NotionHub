@@ -1,0 +1,93 @@
+{
+  "name": "notionhub",
+  "displayName": "NotionHub",
+  "description": "Sync WeRead, Flomo, GitHub, RSS, Douban, Telegram, NetEase and more into Notion via the NotionHub plugin hub.",
+  "version": "2.12.0",
+  "publisher": "wslh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wslh/NotionHub"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "notion",
+    "weread",
+    "wechat-reading",
+    "flomo",
+    "github",
+    "rss",
+    "douban",
+    "telegram",
+    "netease",
+    "sync",
+    "productivity"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onCommand:notionhub.sync",
+    "onCommand:notionhub.check",
+    "onCommand:notionhub.status",
+    "onCommand:notionhub.plugins",
+    "onCommand:notionhub.openSettings"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "notionhub.sync",
+        "title": "NotionHub: Sync Now",
+        "category": "NotionHub",
+        "description": "Run the configured NotionHub plugins against your Notion workspace."
+      },
+      {
+        "command": "notionhub.check",
+        "title": "NotionHub: Check Databases",
+        "category": "NotionHub",
+        "description": "Verify every required Notion database is present and schema is correct."
+      },
+      {
+        "command": "notionhub.status",
+        "title": "NotionHub: Show Workspace Status",
+        "category": "NotionHub",
+        "description": "Print workspace health JSON to the output channel."
+      },
+      {
+        "command": "notionhub.plugins",
+        "title": "NotionHub: List Plugins",
+        "category": "NotionHub",
+        "description": "List all built-in NotionHub plugins and their configuration status."
+      },
+      {
+        "command": "notionhub.openSettings",
+        "title": "NotionHub: Open Settings",
+        "category": "NotionHub",
+        "description": "Open the NotionHub VS Code settings page."
+      }
+    ],
+    "configuration": {
+      "title": "NotionHub",
+      "properties": {
+        "notionhub.pythonPath": {
+          "type": "string",
+          "default": "notionhub",
+          "description": "Command used to invoke the NotionHub Python CLI. Must be on PATH (defaults to the installed 'notionhub' console script)."
+        },
+        "notionhub.envFile": {
+          "type": "string",
+          "default": "",
+          "description": "Optional absolute path to a .env file passed through to the CLI as NOTIONHUB_ENV_FILE."
+        },
+        "notionhub.workingDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Working directory for CLI invocations. Leave empty to use the opened workspace folder."
+        }
+      }
+    }
+  }
+}

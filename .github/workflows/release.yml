@@ -1,0 +1,70 @@
+# Release —— 部署（发布到 PyPI 并创建 GitHub Release）
+#
+# 触发：推送形如 v1.2.3 的 tag。
+# 流程：构建 sdist + wheel → twine 校验 → 发布到 PyPI（预发布版发到 TestPyPI）
+#       → 用本次构建的产物创建 GitHub Release。
+#
+# 使用前请在仓库 Settings → Secrets 中配置：
+#   - PYPI_API_TOKEN        —— 正式 PyPI 的 API Token（https://pypi.org/manage/account/token/）
+#   - TEST_PYPI_API_TOKEN   —— TestPyPI 的 API Token（仅发布 alpha/beta/rc 预发布时需要）
+#
+# 更推荐的方式（无需保管 Token）：PyPI 的 Trusted Publishing（OIDC）。
+#   在 PyPI 项目里配置 Trusted Publisher（GitHub，仓库/工作流 ci.yml→release.yml），
+#   然后把下方 pypa/gh-action-pypi-publish 的 `password:` 整行删除即可自动走 OIDC。
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write   # 用于创建 GitHub Release
+
+jobs:
+  build-and-publish:
+    name: Build & Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: python -m pip install --upgrade pip build twine
+
+      - name: Build distributions
+        run: python -m build
+
+      - name: Validate distributions
+        run: twine check dist/*
+
+      - name: Publish to TestPyPI (pre-release)
+        if: >-
+          contains(github.ref_name, 'alpha') ||
+          contains(github.ref_name, 'beta') ||
+          contains(github.ref_name, 'rc')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
+
+      - name: Publish to PyPI (stable)
+        if: >-
+          !contains(github.ref_name, 'alpha') &&
+          !contains(github.ref_name, 'beta') &&
+          !contains(github.ref_name, 'rc')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

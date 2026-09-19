@@ -1,0 +1,113 @@
+name: 问题反馈 / 功能建议
+description: 按提示提供上下文，帮助维护者和 AI 准确理解、复现并验证需求
+title: "[Issue] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。信息越完整，AI 越容易区分模板配置、微信读书数据、同步代码和 GitHub Actions 环境中的问题。
+
+        除“问题或需求”外，其他项目都可以留空或填写“不清楚”。提交前请删除 API Key、Notion Token、Cookie、邮箱等敏感信息。
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 问题或需求
+      description: 用一两句话说明发生了什么，或者希望增加什么功能。
+      placeholder: 例如：书籍移出微信读书书架后，Notion 中仍然显示为“在读”。
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: 当前结果
+      description: 描述现在看到的结果。可以粘贴脱敏后的日志、截图或页面字段值。
+      placeholder: |
+        - 当前状态：
+        - 页面显示：
+        - Actions 日志：
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+      description: 明确说明完成后应该看到什么，这会成为 AI 验证修改是否成功的依据。
+      placeholder: 例如：下次同步时删除已移出书架的书籍，以及它的章节、划线和笔记。
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 按顺序列出操作；不确定时可以留空。
+      placeholder: |
+        1. 在微信读书中……
+        2. 手动运行 weread sync……
+        3. 打开 Notion……
+
+  - type: input
+    id: action_url
+    attributes:
+      label: GitHub Actions 运行链接
+      description: 如果与同步有关，请提供失败或异常运行的 URL，不要复制 Secrets。
+      placeholder: https://github.com/<owner>/<repo>/actions/runs/...
+
+  - type: input
+    id: notion_url
+    attributes:
+      label: 相关 Notion 页面
+      description: 可提供模板主页、数据库视图或具体书籍页面；请确认维护者有权访问。
+      placeholder: https://www.notion.so/...
+
+  - type: input
+    id: book
+    attributes:
+      label: 相关书籍
+      description: 如果只影响某本书，请提供书名和 BookId；不知道 BookId 时只填书名即可。
+      placeholder: 主场 / 3300150186
+
+  - type: dropdown
+    id: sync_mode
+    attributes:
+      label: 同步方式
+      options:
+        - 不清楚或不适用
+        - GitHub Actions 普通同步
+        - GitHub Actions 全量同步
+        - 本地普通同步
+        - 本地全量同步
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      description: 可填写仓库分支/提交、模板复制时间、Python 版本、操作系统，以及问题出现时间。
+      placeholder: |
+        - 仓库与分支：
+        - Commit：
+        - 模板版本或复制时间：
+        - Python / 操作系统：
+        - 问题出现时间和时区：
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 日志、截图和补充材料
+      description: 请粘贴最小且相关的内容，并用 *** 替换所有密钥、Token、Cookie 和个人信息。
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收标准
+      description: 如果这是功能建议，请列出可以判断“已经完成”的具体条件。
+      placeholder: |
+        - [ ] 普通同步会……
+        - [ ] 全量同步会……
+        - [ ] 不影响……
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: 提交前检查
+      options:
+        - label: 我已隐藏 WEREAD_API_KEY、NOTION_TOKEN、Cookie 和其他敏感信息。

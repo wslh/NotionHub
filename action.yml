@@ -1,0 +1,174 @@
+name: NotionHub Sync (self-hosted)
+description: >-
+  Self-hosted sync for any NotionHub data-source plugin, using THIS repository's
+  own weread2notion CLI (no external notionhub-runner). Supports a single plugin
+  or every configured plugin at once. This is the replacement for the old
+  NotionHub-generated nh-*.yml cloud workflows.
+author: wslh
+
+inputs:
+  plugin-id:
+    description: >-
+      Plugin id to sync (weread, github, douban, flomo, rss, xiaoyuzhou, ...).
+      Ignored when all-plugins is true.
+    required: false
+    default: weread
+  all-plugins:
+    description: Sync every configured plugin at once (plugins sync --all).
+    required: false
+    default: "false"
+  exclude:
+    description: >-
+      Comma-separated plugin ids to skip (only with all-plugins). Used to avoid
+      double-syncing weread when weread.yml already owns that source.
+    required: false
+    default: ""
+  full:
+    description: weread only — back up and rebuild all database rows.
+    required: false
+    default: "false"
+  python-version:
+    description: Python version used to run the sync.
+    required: false
+    default: "3.11"
+  retries:
+    description: Number of sync attempts before giving up (failure retry).
+    required: false
+    default: "2"
+  retry-delay:
+    description: Seconds to wait between retry attempts.
+    required: false
+    default: "30"
+  verbose:
+    description: Enable debug logging to console and logs/.
+    required: false
+    default: "false"
+  concurrency:
+    description: Max parallel book fetches (CONCURRENCY env, weread only).
+    required: false
+    default: "4"
+  # 凭证既可显式通过 inputs 传入（weread.yml 的写法），也可留空由 secrets.* 兜底，
+  # 二者取非空值，因此 sync.yml 无需重复传这些字段也能工作。
+  weread-api-key:
+    description: WeRead Gateway API Key (fallback to secrets.WEREAD_API_KEY).
+    required: false
+    default: ""
+  notion-token:
+    description: Notion Integration secret (fallback to secrets.NOTION_TOKEN).
+    required: false
+    default: ""
+  notion-page:
+    description: Notion page URL/ID (fallback to secrets.NOTION_PAGE).
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: Install weread2notion
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install "$GITHUB_ACTION_PATH"
+    - name: Sync to Notion
+      shell: bash
+      # 透传所有插件所需的凭证 Secrets；未配置的插件在 plugins sync 时会被安全跳过。
+      # 三个核心凭证优先用 inputs（显式传入），为空时回退到 secrets。
+      env:
+        NOTION_TOKEN: ${{ inputs.notion-token || secrets.NOTION_TOKEN }}
+        NOTION_PAGE: ${{ inputs.notion-page || secrets.NOTION_PAGE }}
+        CONCURRENCY: ${{ inputs.concurrency }}
+        WEREAD_API_KEY: ${{ inputs.weread-api-key || secrets.WEREAD_API_KEY }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        # 注意：变量名必须与插件代码实际读取的一致
+        # （douban 读 DOUBAN_BOOK_URLS、bilibili 读 BILIBILI_EXPORT，不是 *_COOKIE）
+        BILIBILI_EXPORT: ${{ secrets.BILIBILI_EXPORT }}
+        DOUBAN_BOOK_URLS: ${{ secrets.DOUBAN_BOOK_URLS }}
+        DOUYIN_COOKIE: ${{ secrets.DOUYIN_COOKIE }}
+        DOUYIN_EXPORT: ${{ secrets.DOUYIN_EXPORT }}
+        XIAOHONGSHU_COOKIE: ${{ secrets.XIAOHONGSHU_COOKIE }}
+        TRAKT_CLIENT_ID: ${{ secrets.TRAKT_CLIENT_ID }}
+        TRAKT_TOKEN: ${{ secrets.TRAKT_TOKEN }}
+        TOGGL_API_TOKEN: ${{ secrets.TOGGL_API_TOKEN }}
+        FLOMO_EXPORT: ${{ secrets.FLOMO_EXPORT }}
+        TELEGRAM_EXPORT: ${{ secrets.TELEGRAM_EXPORT }}
+        NETEASE_PLAYLIST: ${{ secrets.NETEASE_PLAYLIST }}
+        KEEP_EXPORT: ${{ secrets.KEEP_EXPORT }}
+        FOREST_EXPORT: ${{ secrets.FOREST_EXPORT }}
+        APPLEMUSIC_EXPORT: ${{ secrets.APPLEMUSIC_EXPORT }}
+        YOUTUBE_EXPORT: ${{ secrets.YOUTUBE_EXPORT }}
+        YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        GUTU_EXPORT: ${{ secrets.GUTU_EXPORT }}
+        DAYONE_EXPORT: ${{ secrets.DAYONE_EXPORT }}
+        TICKTICK_EXPORT: ${{ secrets.TICKTICK_EXPORT }}
+        DUOLINGO_EXPORT: ${{ secrets.DUOLINGO_EXPORT }}
+        BEIDANCI_EXPORT: ${{ secrets.BEIDANCI_EXPORT }}
+        RSS_FEEDS: ${{ secrets.RSS_FEEDS }}
+        XIAOYUZHOU_FEEDS: ${{ secrets.XIAOYUZHOU_FEEDS }}
+        # --- 新增：原云端集成补齐的自托管插件凭证 ---
+        SPOTIFY_TOKEN: ${{ secrets.SPOTIFY_TOKEN }}
+        SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+        SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+        STRAVA_TOKEN: ${{ secrets.STRAVA_TOKEN }}
+        WEIBO_UID: ${{ secrets.WEIBO_UID }}
+        WEIBO_COOKIE: ${{ secrets.WEIBO_COOKIE }}
+        XIAOHONGSHU_EXPORT: ${{ secrets.XIAOHONGSHU_EXPORT }}
+        JIKE_EXPORT: ${{ secrets.JIKE_EXPORT }}
+        JIKE_COOKIE: ${{ secrets.JIKE_COOKIE }}
+        PODCAST_OPML: ${{ secrets.PODCAST_OPML }}
+        APPLEPODCAST_OPML: ${{ secrets.APPLEPODCAST_OPML }}
+        DAILY_NOTES_DIR: ${{ secrets.DAILY_NOTES_DIR }}
+        DAILY_WEATHER_LOCATION: ${{ secrets.DAILY_WEATHER_LOCATION }}
+        DAILY_LOCATION_LOCATION: ${{ secrets.DAILY_LOCATION_LOCATION }}
+        GUWENDAO_EXPORT: ${{ secrets.GUWENDAO_EXPORT }}
+        STORAGE_ENDPOINT: ${{ secrets.STORAGE_ENDPOINT }}
+        STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET }}
+        STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+        STORAGE_SECRET_KEY: ${{ secrets.STORAGE_SECRET_KEY }}
+        STORAGE_REGION: ${{ secrets.STORAGE_REGION }}
+        STORAGE_PREFIX: ${{ secrets.STORAGE_PREFIX }}
+        STORAGE_CDN_DOMAIN: ${{ secrets.STORAGE_CDN_DOMAIN }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
+        set -euo pipefail
+        PLUGIN_ID="${{ inputs.plugin-id }}"
+        if [ "${{ inputs.all-plugins }}" = "true" ]; then
+          CMD="plugins sync --all"
+          EXCLUDE="${{ inputs.exclude }}"
+          if [ -n "$EXCLUDE" ]; then
+            for id in $(echo "$EXCLUDE" | tr ',' ' '); do
+              CMD="$CMD --exclude $(echo "$id" | xargs)"
+            done
+          fi
+        elif [ "$PLUGIN_ID" = "weread" ]; then
+          CMD="sync"
+        else
+          CMD="plugins sync $PLUGIN_ID"
+        fi
+        MODE=""
+        if [ "$CMD" = "sync" ] && [ "${{ inputs.full }}" = "true" ]; then MODE="--full"; fi
+        if [ "${{ inputs.verbose }}" = "true" ]; then MODE="$MODE --verbose"; fi
+        max_attempts="${{ inputs.retries }}"
+        retry_delay="${{ inputs.retry-delay }}"
+        attempt=0
+        until [ "$attempt" -ge "$max_attempts" ]; do
+          attempt=$((attempt+1))
+          echo "同步尝试 $attempt/$max_attempts -> weread2notion $CMD $MODE"
+          if weread2notion $CMD $MODE; then
+            echo "同步成功"; break
+          fi
+          echo "第 $attempt 次同步失败"
+          if [ "$attempt" -lt "$max_attempts" ]; then sleep "$retry_delay"; fi
+        done
+        if [ "$attempt" -ge "$max_attempts" ]; then
+          echo "已达最大重试次数 $max_attempts，同步失败"
+          exit 1
+        fi
+
+branding:
+  icon: book-open
+  color: green

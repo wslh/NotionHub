@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 560" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="680" height="560" fill="#ffffff"/>
+  <text x="20" y="30" font-size="20" font-weight="700" fill="#0f172a">NotionHub 系统架构与模块分层</text>
+  <text x="20" y="52" font-size="12" fill="#64748b">触发器 · 执行层 · Python 包（核心）· 存储层 — 同步逻辑与触发器解耦，以插件协议横向扩展</text>
+
+  <!-- Layer 1 Trigger -->
+  <rect x="16" y="68" width="648" height="128" rx="10" fill="#eef2f7" stroke="#cbd5e1"/>
+  <text x="28" y="90" font-size="13" font-weight="700" fill="#0ea5a4">① 触发器层 Trigger（不碰数据，只负责配置 + 触发）</text>
+  <g font-size="12" fill="#1e293b">
+    <rect x="28" y="100" width="150" height="66" rx="8" fill="#ffffff" stroke="#0ea5a4"/>
+    <text x="103" y="126" text-anchor="middle" font-weight="600">浏览器扩展</text>
+    <text x="103" y="146" text-anchor="middle" font-size="10" fill="#64748b">Edge / Chrome MV3</text>
+
+    <rect x="190" y="100" width="150" height="66" rx="8" fill="#ffffff" stroke="#0ea5a4"/>
+    <text x="265" y="126" text-anchor="middle" font-weight="600">VS Code 扩展</text>
+    <text x="265" y="146" text-anchor="middle" font-size="10" fill="#64748b">命令面板封装 CLI</text>
+
+    <rect x="352" y="100" width="150" height="66" rx="8" fill="#ffffff" stroke="#0ea5a4"/>
+    <text x="427" y="126" text-anchor="middle" font-weight="600">GitHub Actions</text>
+    <text x="427" y="146" text-anchor="middle" font-size="10" fill="#64748b">自带自托管工作流</text>
+
+    <rect x="514" y="100" width="142" height="66" rx="8" fill="#ffffff" stroke="#0ea5a4"/>
+    <text x="585" y="126" text-anchor="middle" font-weight="600">Worker</text>
+    <text x="585" y="146" text-anchor="middle" font-size="10" fill="#64748b">常驻 · 长毛象播报</text>
+  </g>
+
+  <!-- Layer 2 Runner -->
+  <rect x="16" y="208" width="648" height="84" rx="10" fill="#fef6ec" stroke="#fcd9a5"/>
+  <text x="28" y="230" font-size="13" font-weight="700" fill="#b45309">② 执行层 Runner（进程入口）</text>
+  <g font-size="12" fill="#1e293b">
+    <rect x="28" y="240" width="300" height="44" rx="8" fill="#ffffff" stroke="#f59e0b"/>
+    <text x="178" y="266" text-anchor="middle" font-weight="600">cli.main — 唯一进程入口</text>
+    <text x="178" y="282" text-anchor="middle" font-size="10" fill="#64748b">weread2notion / notionhub 双命令</text>
+
+    <rect x="344" y="240" width="306" height="44" rx="8" fill="#ffffff" stroke="#f59e0b"/>
+    <text x="497" y="266" text-anchor="middle" font-weight="600">11 个子命令</text>
+    <text x="497" y="282" text-anchor="middle" font-size="10" fill="#64748b">sync / check / repair / restore / status / export / insights / credentials / plugins / worker</text>
+  </g>
+
+  <!-- Layer 3 Python package -->
+  <rect x="16" y="304" width="648" height="184" rx="10" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="28" y="326" font-size="13" font-weight="700" fill="#334155">③ Python 包（核心）weread2notion</text>
+  <g font-size="12" fill="#1e293b">
+    <rect x="28" y="336" width="196" height="144" rx="8" fill="#ffffff" stroke="#2563eb"/>
+    <text x="126" y="358" text-anchor="middle" font-weight="700" fill="#2563eb">核心引擎</text>
+    <text x="126" y="382" text-anchor="middle">Synchronizer</text>
+    <text x="126" y="402" text-anchor="middle" font-size="10" fill="#64748b">sync.py · 7 阶段编排</text>
+    <text x="126" y="426" text-anchor="middle">WeReadClient</text>
+    <text x="126" y="446" text-anchor="middle" font-size="10" fill="#64748b">weread.py · API 客户端</text>
+    <text x="126" y="470" text-anchor="middle">NotionWorkspace</text>
+    <text x="126" y="490" text-anchor="middle" font-size="10" fill="#64748b">notion.py · HTTP + 字段级 diff</text>
+
+    <rect x="240" y="336" width="208" height="144" rx="8" fill="#ffffff" stroke="#16a34a"/>
+    <text x="344" y="358" text-anchor="middle" font-weight="700" fill="#16a34a">插件层</text>
+    <text x="344" y="382" text-anchor="middle">Plugin / BasePlugin</text>
+    <text x="344" y="402" text-anchor="middle" font-size="10" fill="#64748b">约定优于配置</text>
+    <text x="344" y="426" text-anchor="middle">33 个数据源插件</text>
+    <text x="344" y="446" text-anchor="middle" font-size="10" fill="#64748b">flomo / netease / douban …</text>
+    <text x="344" y="470" text-anchor="middle">PluginRegistry + utils</text>
+    <text x="344" y="490" text-anchor="middle" font-size="10" fill="#64748b">注册表 + 共享工具</text>
+
+    <rect x="464" y="336" width="192" height="144" rx="8" fill="#ffffff" stroke="#64748b"/>
+    <text x="560" y="358" text-anchor="middle" font-weight="700" fill="#64748b">基础设施</text>
+    <text x="560" y="382" text-anchor="middle" font-size="10">sources · normalize</text>
+    <text x="560" y="404" text-anchor="middle" font-size="10">blocks · analytics</text>
+    <text x="560" y="426" text-anchor="middle" font-size="10">repair · status · config</text>
+    <text x="560" y="448" text-anchor="middle" font-size="10">credentials · telemetry</text>
+    <text x="560" y="470" text-anchor="middle" font-size="10">logging · ai_summary</text>
+    <text x="560" y="492" text-anchor="middle" font-size="10">mastodon</text>
+  </g>
+
+  <!-- Layer 4 Store -->
+  <rect x="16" y="500" width="648" height="48" rx="10" fill="#eef2f7" stroke="#cbd5e1"/>
+  <text x="28" y="522" font-size="13" font-weight="700" fill="#334155">④ 存储层 Store</text>
+  <rect x="160" y="508" width="492" height="32" rx="8" fill="#ffffff" stroke="#64748b"/>
+  <text x="406" y="529" text-anchor="middle" font-size="11" fill="#1e293b">Notion 模板工作区：书架/日/周/月/年/分类/作者 + 设置 + 阅读快照（库名·属性·去重键硬编码于代码）</text>
+</svg>

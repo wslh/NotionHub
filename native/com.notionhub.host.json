@@ -1,0 +1,15 @@
+{
+    "name": "com.notionhub.host",
+    "description": "NotionHub bridge: manage the project .env and run notionhub sync",
+    "path": "C:\\Users\\我省略号\\Desktop\\工作中\\0.1作品\\插件\\NotionHub\\native\\NotionHubBridge.exe",
+    "type": "stdio",
+    "allowed_origins": [
+        "chrome-extension://mbanlcjkoinamdpfamldfdmaiekidmjj/"
+    ],
+    "args": [
+        "--env-file",
+        "C:\\Users\\我省略号\\Desktop\\工作中\\0.1作品\\插件\\NotionHub\\.env",
+        "--cli",
+        "C:\\Python314\\Scripts\\weread2notion.exe"
+    ]
+}

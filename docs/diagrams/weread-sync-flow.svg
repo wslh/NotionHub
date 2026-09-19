@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 448" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="680" height="448" fill="#ffffff"/>
+  <text x="20" y="28" font-size="18" font-weight="700" fill="#0f172a">微信读书同步主链路数据流</text>
+  <text x="20" y="48" font-size="12" fill="#64748b">旗舰源走专用 Synchronizer；其余 32 个数据源走通用 BasePlugin 路径，终点同为 NotionWorkspace</text>
+
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <!-- WeRead API -->
+  <rect x="240" y="64" width="200" height="40" rx="8" fill="#ffffff" stroke="#2563eb"/>
+  <text x="340" y="89" text-anchor="middle" font-weight="600" fill="#1e293b">微信读书 API</text>
+  <line x1="340" y1="104" x2="340" y2="126" stroke="#475569" stroke-width="2" marker-end="url(#ah)"/>
+
+  <!-- WeReadClient -->
+  <rect x="240" y="128" width="200" height="40" rx="8" fill="#ffffff" stroke="#2563eb"/>
+  <text x="340" y="153" text-anchor="middle" font-weight="600" fill="#1e293b">WeReadClient（weread.py）</text>
+  <line x1="340" y1="168" x2="340" y2="190" stroke="#475569" stroke-width="2" marker-end="url(#ah)"/>
+
+  <!-- Synchronizer -->
+  <rect x="110" y="192" width="460" height="100" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="340" y="214" text-anchor="middle" font-weight="700" fill="#2563eb">Synchronizer.run() — 7 阶段编排（sync.py）</text>
+  <text x="340" y="236" text-anchor="middle" font-size="11" fill="#1e293b">plan → 变更检测 → 并发拉取书籍 bundle（ThreadPoolExecutor）</text>
+  <text x="340" y="256" text-anchor="middle" font-size="11" fill="#1e293b">①统计 ②作者/分类 ③书架 ④快照 ⑤正文划线笔记 ⑥阅读记录 ⑦AI 导读</text>
+  <text x="340" y="278" text-anchor="middle" font-size="10" fill="#64748b">检查点续传 · 失败自愈 · 选择性(--book/--tag) · 全量(--full 先备份再重建)</text>
+  <line x1="340" y1="292" x2="340" y2="314" stroke="#475569" stroke-width="2" marker-end="url(#ah)"/>
+
+  <!-- NotionWorkspace -->
+  <rect x="170" y="316" width="340" height="46" rx="10" fill="#ecfdf5" stroke="#16a34a"/>
+  <text x="340" y="335" text-anchor="middle" font-weight="700" fill="#16a34a">NotionWorkspace（notion.py）</text>
+  <text x="340" y="353" text-anchor="middle" font-size="10" fill="#1e293b">upsert · find · changed_properties 字段级 diff · 指数退避重试</text>
+
+  <!-- side branch: plugins -->
+  <text x="560" y="150" font-size="11" fill="#16a34a" text-anchor="middle">其余 32 个数据源</text>
+  <line x1="520" y1="158" x2="372" y2="332" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+  <text x="500" y="252" font-size="10" fill="#16a34a" text-anchor="middle">PluginRegistry → run_plugin</text>
+  <text x="500" y="266" font-size="10" fill="#16a34a" text-anchor="middle">→ BasePlugin.sync</text>
+
+  <line x1="340" y1="362" x2="340" y2="380" stroke="#475569" stroke-width="2" marker-end="url(#ah)"/>
+
+  <!-- Notion DBs -->
+  <g font-size="10" fill="#1e293b" text-anchor="middle">
+    <rect x="20" y="384" width="88" height="40" rx="8" fill="#ffffff" stroke="#64748b"/>
+    <text x="64" y="409">书架</text>
+    <rect x="113" y="384" width="88" height="40" rx="8" fill="#ffffff" stroke="#64748b"/>
+    <text x="157" y="409">日/周/月/年</text>
+    <rect x="206" y="384" width="88" height="40" rx="8" fill="#ffffff" stroke="#64748b"/>
+    <text x="250" y="409">分类/作者</text>
+    <rect x="299" y="384" width="88" height="40" rx="8" fill="#ffffff" stroke="#64748b"/>
+    <text x="343" y="409">阅读快照</text>
+    <rect x="392" y="384" width="88" height="40" rx="8" fill="#ffffff" stroke="#64748b"/>
+    <text x="436" y="409">阅读记录</text>
+    <rect x="485" y="384" width="88" height="40" rx="8" fill="#ffffff" stroke="#64748b"/>
+    <text x="529" y="409">划线</text>
+    <rect x="578" y="384" width="88" height="40" rx="8" fill="#ffffff" stroke="#64748b"/>
+    <text x="622" y="409">笔记</text>
+  </g>
+</svg>

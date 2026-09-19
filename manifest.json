@@ -1,0 +1,65 @@
+{
+  "manifest_version": 3,
+  "name": "NotionHub",
+  "version": "2.12.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwqKEfHWZCUA3k+W31IuUq0nsSFdfxo9wMpSsV5jREPqGVRSgnY4omfp0hX4E3wQXPKpTBBeOek97+wm9zv4XAlFiZVVhrSDM30SBLZ5zXEM/nANYhNE2Qab/P7yDkPjaEL6y5FiaR7jjXtW/gwbhjpdzGuzmmPa/cvqZl4HVkwsVnqjVipPJFWgBfb1xXJJrL3SDoSZNrL3DwJyW6LaywwA6n150PD3FhzoViViKOCn6KJcE6U65rafEcjmiWOmJYVLeZHHSmjWReouROK+U6I0ExJhCFl3GxtLB9undw56pHXOMB6p/tnKh6EeAlM7MQnhTz5SsO8PYsb13y3Ue/wIDAQAB",
+  "description": "Sign in with Notion and connect your workspace to NotionHub sync plugins.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "scripting",
+    "identity",
+    "nativeMessaging",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://api.notion.com/*",
+    "https://api.github.com/*",
+    "https://github.com/*",
+    "https://weread.qq.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://weread.qq.com/*"],
+      "js": ["weread_key_capture.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "NotionHub",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["panel.html", "panel.css", "panel.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "notionhub-copy-sync-cmd": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Copy 'notionhub sync --quiet' to clipboard"
+    },
+    "notionhub-open-panel": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H"
+      },
+      "description": "Open the NotionHub control panel"
+    }
+  }
+}

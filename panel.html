@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>NotionHub Control Panel</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div class="brand-text">
+        <div class="brand-name">NotionHub</div>
+        <div class="brand-version" id="brand-version">—</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#sync" class="nav-item active" data-tab="sync">
+        <span class="nav-icon">&#8635;</span>
+        <span>同步服务</span>
+      </a>
+      <a href="#account" class="nav-item" data-tab="account">
+        <span class="nav-icon">&#9787;</span>
+        <span>账号</span>
+      </a>
+      <a href="#notify" class="nav-item" data-tab="notify">
+        <span class="nav-icon">&#9737;</span>
+        <span>通知</span>
+      </a>
+      <a href="#storage" class="nav-item" data-tab="storage">
+        <span class="nav-icon">&#9729;</span>
+        <span>资源存储</span>
+      </a>
+      <a href="#worker" class="nav-item" data-tab="worker">
+        <span class="nav-icon">&#128057;</span>
+        <span>Worker（长毛象）</span>
+      </a>
+      <a href="#about" class="nav-item" data-tab="about">
+        <span class="nav-icon">&#8505;</span>
+        <span>关于</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a id="open-popup" class="link-btn" href="#">关闭标签页</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <h1 id="tab-title">同步服务</h1>
+      <p id="tab-subtitle" class="subtitle">选择已配置的数据源，点击「使用文档」查看接入步骤。</p>
+    </header>
+
+    <section id="tab-sync" class="tab-pane active">
+      <div class="toolbar">
+        <input id="search" class="search" type="search" placeholder="搜索插件…">
+        <select id="filter-category" class="filter">
+          <option value="">全部</option>
+          <option value="\u9605\u8bfb">阅读</option>
+          <option value="\u64ad\u5ba2">播客</option>
+          <option value="\u7b14\u8bb0">笔记</option>
+          <option value="\u5f71\u97f3">影音</option>
+          <option value="\u6548\u7387">效率</option>
+          <option value="\u5b66\u4e60">学习</option>
+          <option value="\u5f85\u529e">待办</option>
+          <option value="\u8fd0\u52a8">运动</option>
+          <option value="\u5176\u4ed6">其他</option>
+        </select>
+        <button id="copy-sync" class="btn-secondary" title="复制 notionhub sync --quiet">Copy sync</button>
+        <a id="open-github" class="link-btn" href="https://github.com/wslh/NotionHub" target="_blank" rel="noopener">GitHub</a>
+      </div>
+
+      <div id="plugin-grid" class="grid"></div>
+
+      <p class="footer-hint">
+        所有真正同步逻辑由本机 <code>notionhub</code> CLI 执行。<br>
+        请确认终端已 <code>pip install -e .</code> 并配置 <code>.env</code>。
+      </p>
+    </section>
+
+    <section id="tab-account" class="tab-pane">
+      <div class="account-card notion-card" id="notion-account-card">
+        <div class="account-icon notion-icon">N</div>
+        <div class="account-body">
+          <div class="account-name">Notion</div>
+          <div class="account-meta" id="notion-account-meta">未登录</div>
+          <p class="account-hint" id="notion-account-hint">点击下方按钮，授权 NotionHub 自动复制模板到当前 Workspace。</p>
+        </div>
+        <div class="account-actions" id="notion-account-actions">
+          <button id="notion-login-btn" class="btn-primary">登录账号</button>
+        </div>
+      </div>
+
+      <div class="account-card github-card" id="github-account-card">
+        <div class="account-icon github-icon">&#9737;</div>
+        <div class="account-body">
+          <div class="account-name">GitHub</div>
+          <div class="account-meta" id="github-account-meta">未绑定</div>
+        </div>
+        <div class="account-actions" id="github-account-actions">
+          <a class="link-btn" href="https://github.com/wslh/NotionHub" target="_blank" rel="noopener" title="打开外部链接">&#x1F517;</a>
+          <button id="github-login-btn" class="btn-secondary">绑定</button>
+        </div>
+      </div>
+
+      <details class="account-card oauth-config">
+        <summary class="oauth-summary">高级：自定义 OAuth 应用（可选）</summary>
+        <div class="oauth-body">
+          <ol class="oauth-steps">
+            <li>默认情况下，Notion 授权使用 NotionHub 预置的「自动化」集成，无需手动创建应用，授权后会自动复制模板到当前 Workspace。</li>
+            <li>只有当你想使用自己的 Notion Public Integration 或 GitHub OAuth App 时，才需要在下方填写 Client ID / Secret。</li>
+            <li><b>GitHub</b>：默认使用 NotionHub 内置 OAuth App，无需填写。如想用自己的应用，访问 <a href="https://github.com/settings/developers" target="_blank" rel="noopener">GitHub Developer Settings</a> → <b>New OAuth App</b>，Authorization callback URL 填入下方 Redirect URI，复制 Client ID / Client Secret 粘贴到输入框后点「保存凭据」。</li>
+            <li>保存后：点 GitHub 卡片的「连接 GitHub」走 GitHub 授权，绑定后会校验「同步目标仓库」（默认本项目仓库）是否具备 <code>weread.yml</code> / <code>sync.yml</code>。各数据源的同步凭证请在目标仓库的 <b>Settings → Secrets and variables → Actions</b> 中配置，不再需要云端 runner 仓库。</li>
+          </ol>
+          <label>同步目标仓库（owner/repo，留空则用默认 wslh/NotionHub）</label>
+          <input id="github-sync-repo" type="text" placeholder="wslh/NotionHub" autocomplete="off">
+          <label>Redirect URI（需复制到 OAuth App 配置页）</label>
+          <div class="input-eye">
+            <input id="oauth-redirect-uri" type="text" readonly autocomplete="off">
+            <button class="copy-btn" data-target="oauth-redirect-uri" type="button">Copy</button>
+          </div>
+          <label>Client ID（Notion 与 GitHub 共用）</label>
+          <input id="oauth-client-id" type="text" placeholder="Notion integration 或 GitHub OAuth App 的 Client ID" autocomplete="off">
+          <label>Client Secret（Notion 与 GitHub 共用）</label>
+          <input id="oauth-client-secret" type="password" placeholder="对应的 Client Secret" autocomplete="off">
+          <div class="row">
+            <button id="oauth-save" class="btn-primary">保存凭据</button>
+            <span id="oauth-status" class="status-pill"></span>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section id="tab-notify" class="tab-pane">
+      <div class="notify-header">
+        <div class="notify-icon">&#9737;</div>
+        <div class="notify-text">
+          <h2>同步通知</h2>
+          <p class="subtitle">先保存一个通知平台，然后在每个同步服务详情页单独开启通知。</p>
+        </div>
+      </div>
+
+      <div class="notify-grid">
+        <div class="notify-channel" data-channel="telegram">
+          <div class="channel-icon">&#9992;</div>
+          <div class="channel-name">Telegram</div>
+          <p class="channel-desc">适合立即收到开始同步、完成同步和摘要结果。</p>
+          <span class="channel-badge default">默认</span>
+        </div>
+        <div class="notify-channel" data-channel="bark">
+          <div class="channel-icon">&#9737;</div>
+          <div class="channel-name">Bark</div>
+          <p class="channel-desc">适合 iPhone 直接接收同步结果，复制 Bark App 中的推送地址即可。</p>
+        </div>
+        <div class="notify-channel" data-channel="feishu">
+          <div class="channel-icon">&#9737;</div>
+          <div class="channel-name">飞书 <span class="channel-badge default">已保存</span><span class="channel-badge mute">默认</span></div>
+          <p class="channel-desc">使用飞书应用发送同步提醒，接收对象仅需填写手机号或邮箱。</p>
+        </div>
+        <div class="notify-channel" data-channel="webhook">
+          <div class="channel-icon">&#9737;</div>
+          <div class="channel-name">Webhook</div>
+          <p class="channel-desc">支持企业微信、钉钉和飞书群机器人，也可以发送到自定义 Webhook。</p>
+        </div>
+      </div>
+
+      <div class="row right">
+        <a id="open-notify-docs" class="link-btn" href="https://github.com/wslh/NotionHub#notify" target="_blank" rel="noopener">配置文档 &#x29C9;</a>
+      </div>
+
+      <div class="notify-form">
+        <label>Bot Token</label>
+        <div class="input-eye">
+          <input id="bot-token" type="password" placeholder="例如 123456:ABCDEF..." autocomplete="off">
+          <button class="eye-toggle" data-target="bot-token" type="button">&#9737;</button>
+        </div>
+        <p class="hint">在 BotFather 创建机器人后获取。</p>
+
+        <label>Chat ID</label>
+        <div class="input-eye">
+          <input id="chat-id" type="password" placeholder="例如 902643712" autocomplete="off">
+          <button class="eye-toggle" data-target="chat-id" type="button">&#9737;</button>
+        </div>
+        <p class="hint">填写接收通知的聊天 ID。</p>
+
+        <div class="row right">
+          <button id="notify-clear" class="btn-secondary">删除</button>
+          <button id="notify-save" class="btn-primary">保存</button>
+        </div>
+        <span id="notify-status" class="status-pill"></span>
+      </div>
+    </section>
+
+    <section id="tab-storage" class="tab-pane">
+      <div class="storage-header">
+        <div class="storage-icon">&#9729;</div>
+        <div class="storage-text">
+          <h2>资源存储</h2>
+          <p class="subtitle">将 YouTube、小红书等试点服务的媒体上传到你自己的对象存储。</p>
+        </div>
+      </div>
+
+      <div id="storage-gate" class="storage-gate" hidden>
+        <p>请先在“账号”页面使用 Notion 登录，再配置自有资源存储。</p>
+      </div>
+
+      <div id="storage-body" class="storage-body">
+        <p class="storage-intro">选择支持 S3 协议的对象存储，填写访问凭据后保存。保存后，对应插件在同步媒体时会自动上传到该存储。</p>
+
+        <div class="storage-providers">
+          <div class="storage-provider" data-provider="r2">
+            <div class="provider-logo">R2</div>
+            <div class="provider-name">Cloudflare R2</div>
+            <p class="provider-desc">无 egress 费用的 S3 兼容存储。</p>
+          </div>
+          <div class="storage-provider" data-provider="s3">
+            <div class="provider-logo">S3</div>
+            <div class="provider-name">AWS S3</div>
+            <p class="provider-desc">Amazon Simple Storage Service。</p>
+          </div>
+          <div class="storage-provider" data-provider="oss">
+            <div class="provider-logo">OSS</div>
+            <div class="provider-name">阿里云 OSS</div>
+            <p class="provider-desc">阿里云对象存储。</p>
+          </div>
+          <div class="storage-provider" data-provider="b2">
+            <div class="provider-logo">B2</div>
+            <div class="provider-name">Backblaze B2</div>
+            <p class="provider-desc">Backblaze B2 Cloud Storage。</p>
+          </div>
+          <div class="storage-provider" data-provider="cos">
+            <div class="provider-logo">COS</div>
+            <div class="provider-name">腾讯云 COS</div>
+            <p class="provider-desc">腾讯云对象存储。</p>
+          </div>
+        </div>
+
+        <div class="storage-form">
+          <label for="storage-endpoint">Endpoint（S3 API）</label>
+          <input id="storage-endpoint" type="text" placeholder="https://xxx.r2.cloudflarestorage.com" autocomplete="off" spellcheck="false">
+          <p class="hint">S3 兼容 Endpoint，包含 https:// 前缀。</p>
+
+          <label for="storage-region">Region</label>
+          <input id="storage-region" type="text" placeholder="auto / ap-northeast-1" autocomplete="off" spellcheck="false">
+
+          <label for="storage-bucket">Bucket</label>
+          <input id="storage-bucket" type="text" placeholder="my-notionhub-bucket" autocomplete="off" spellcheck="false">
+
+          <div class="row">
+            <div class="input-block">
+              <label for="storage-access-key">Access Key ID</label>
+              <input id="storage-access-key" type="text" placeholder="AKIA..." autocomplete="off" spellcheck="false">
+            </div>
+            <div class="input-block">
+              <label for="storage-secret-key">Secret Access Key</label>
+              <div class="input-eye">
+                <input id="storage-secret-key" type="password" placeholder="..." autocomplete="off" spellcheck="false">
+                <button class="eye-toggle" data-target="storage-secret-key" type="button">&#128065;</button>
+              </div>
+            </div>
+          </div>
+
+          <label for="storage-prefix">对象前缀</label>
+          <input id="storage-prefix" type="text" placeholder="notionhub-media/" value="notionhub-media/" autocomplete="off" spellcheck="false">
+          <p class="hint">建议以斜杠结尾，避免覆盖同名文件。</p>
+
+          <label for="storage-cdn-domain">自定义 CDN 域名（可选）</label>
+          <input id="storage-cdn-domain" type="text" placeholder="https://media.example.com" autocomplete="off" spellcheck="false">
+          <p class="hint">若填写，同步到 Notion 的媒体 URL 会使用该域名。</p>
+
+          <h4>开启媒体上传的插件</h4>
+          <div class="storage-toggles">
+            <label class="toggle-row">
+              <input type="checkbox" id="storage-youtube">
+              <span>YouTube</span>
+            </label>
+            <label class="toggle-row">
+              <input type="checkbox" id="storage-xiaohongshu">
+              <span>小红书</span>
+            </label>
+            <label class="toggle-row">
+              <input type="checkbox" id="storage-douyin">
+              <span>抖音</span>
+            </label>
+          </div>
+
+          <div class="row right">
+            <button id="storage-clear" class="btn-secondary">删除配置</button>
+            <button id="storage-save" class="btn-primary">保存配置</button>
+          </div>
+          <span id="storage-status" class="status-pill"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-worker" class="tab-pane">
+      <div class="card large">
+        <h2>自有 Worker（长毛象）</h2>
+        <p class="subtitle">脱离 GitHub Actions，在本机常驻一个进程，按固定间隔触发「本机 CLI 同步」。每轮同步结果可发布到你的长毛象（Mastodon）账号作为播报与心跳。</p>
+
+        <div class="row right">
+          <span id="worker-status-pill" class="status-pill">未运行</span>
+        </div>
+
+        <div class="cred-field">
+          <label>同步间隔（分钟）</label>
+          <input id="worker-interval" type="number" min="1" value="5">
+          <p class="hint">默认 5 分钟。过短可能触发 Notion 限流。</p>
+        </div>
+
+        <div class="cred-field">
+          <label>数据源（留空 = 全部已配置）</label>
+          <input id="worker-services" type="text" placeholder="weread,github,rss">
+        </div>
+
+        <div class="row">
+          <button id="worker-start" class="btn-primary" type="button">启动 Worker</button>
+          <button id="worker-stop" class="btn-secondary" type="button">停止</button>
+          <button id="worker-refresh" class="btn-secondary" type="button">刷新状态</button>
+        </div>
+
+        <hr class="wdivider">
+
+        <h4>长毛象播报（可选）</h4>
+        <p class="hint">在实例「开发 → 新建应用」取得访问令牌，Worker 会把每轮同步结果以嘟文发布。</p>
+        <label class="toggle-row">
+          <input type="checkbox" id="worker-mastodon">
+          <span>启用长毛象播报（需先保存下方凭据）</span>
+        </label>
+
+        <div class="cred-field">
+          <label>实例地址</label>
+          <input id="worker-mastodon-instance" type="text" placeholder="https://mastodon.social">
+        </div>
+        <div class="cred-field">
+          <label>访问令牌</label>
+          <div class="input-eye">
+            <input id="worker-mastodon-token" type="password" placeholder="填令牌后点保存">
+            <button class="eye-toggle" data-target="worker-mastodon-token" type="button">&#128065;</button>
+          </div>
+        </div>
+        <div class="row tight">
+          <button id="worker-mastodon-save" class="btn-secondary" type="button">保存凭据到 .env</button>
+          <span id="worker-mastodon-status" class="status-pill"></span>
+        </div>
+
+        <hr class="wdivider">
+
+        <h4>运行状态</h4>
+        <pre id="worker-detail" class="env-preview">尚未启动。</pre>
+      </div>
+    </section>
+
+    <section id="tab-about" class="tab-pane">
+      <div class="card large">
+        <h2>关于 NotionHub</h2>
+        <p><b>NotionHub <span class="app-version">—</span></b>（扩展）— Python 端 <b>v2.12.0</b>。</p>
+        <p class="subtitle">把微信读书、Flomo、GitHub Stars、RSS、Douidian、Telegram Saved Messages、NetEase Music 等数据源通过插件方式接入 Notion 数据库。</p>
+        <ul class="bullet-list">
+          <li>33 个内置插件：weread / flomo / github / rss / douban / telegram / netease / xiaoyuzhou / keep / toggl / forest / applemusic / douyin / youtube / gutu / trakt / dayone / ticktick / duolingo / bilibili / beidanci / spotify / strava / weibo / xiaohongshu / jike / podcast / applepodcast / daily / daily-weather / daily-location / guwendao / fix。</li>
+          <li>Python CLI 由 <code>pip install -e .</code> 安装，提供 <code>notionhub</code> / <code>weread2notion</code> 命令。</li>
+          <li>自托管 GitHub Actions 自动同步：<code>.github/workflows/weread.yml</code>（微信读书）与 <code>sync.yml</code>（其余数据源，一条 <code>plugins sync --all</code> 覆盖）。无需 notionhub-runner 云端仓库。</li>
+          <li>扩展只与 <code>https://api.notion.com/*</code> 通信，Token 仅存在本机 <code>chrome.storage.local</code>。</li>
+        </ul>
+        <div class="row">
+          <a class="link-btn" href="https://github.com/wslh/NotionHub" target="_blank" rel="noopener">GitHub 项目主页</a>
+          <a class="link-btn" href="https://github.com/wslh/NotionHub/issues" target="_blank" rel="noopener">报告问题</a>
+          <a class="link-btn" href="https://github.com/wslh/NotionHub/blob/main/CHANGELOG.md" target="_blank" rel="noopener">更新日志</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="drawer-overlay" class="drawer-overlay" hidden>
+    <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <header class="drawer-head">
+        <span id="drawer-icon" class="drawer-icon">&#128214;</span>
+        <div class="drawer-head-text">
+          <h2 id="drawer-title">WeRead</h2>
+          <p id="drawer-desc" class="subtitle"></p>
+        </div>
+        <button id="drawer-close" class="drawer-close" type="button" aria-label="关闭">&times;</button>
+      </header>
+
+      <div class="drawer-body" id="drawer-body">
+        <p id="drawer-notice" class="cfg-notice" hidden></p>
+        <!-- 通用第三方平台授权区：由插件声明的 credentials 自动生成 -->
+        <div id="cred-panel" class="cred-panel" hidden>
+          <h3 class="cred-title">第三方平台授权</h3>
+          <div id="cred-form"></div>
+          <div class="row tight">
+            <button id="cred-save" class="btn-secondary">保存并写入 .env</button>
+            <span id="cred-status" class="status-pill"></span>
+          </div>
+          <p class="hint" id="cred-hint">凭证写入 .env 后即时生效；同步前可用下方验证确认是否可用。</p>
+        </div>
+        <section class="cfg-card">
+          <div class="cfg-step"><span class="cfg-num">1</span><h3>Notion 模板</h3></div>
+          <p class="cfg-hint">打开模板，点右上角 <code>Duplicate</code> 复制到你自己的 Workspace，然后把新页面的完整 URL 粘贴到下面。</p>
+          <div class="row tight">
+            <a id="open-template" class="link-btn" href="https://app.notion.com/p/wph/Template-3a329affe5af800b8581f98b71e948fb" target="_blank" rel="noopener">打开 Notion 模板 ⧉</a>
+          </div>
+          <label for="cfg-notion-page">Duplicate 后的页面 URL</label>
+          <div class="input-btn-row">
+            <input id="cfg-notion-page" type="text" placeholder="https://www.notion.so/xxxxx32位IDxxxxx" autocomplete="off" spellcheck="false">
+            <button id="cfg-verify-tpl" type="button" class="btn-secondary">验证模板</button>
+          </div>
+          <span id="cfg-tpl-status" class="status-pill"></span>
+          <p class="hint">必须是你自己 Duplicate 的新页面，不能用公共模板地址。点「验证模板」可确认页面含全部 7 个必需数据库。</p>
+        </section>
+
+        <section class="cfg-card" id="cfg-weread-card">
+          <div class="cfg-step"><span class="cfg-num">2</span><h3>微信读书</h3><span id="cfg-weread-state" class="status-pill">待配置</span></div>
+          <p class="cfg-hint">使用微信读书 Gateway API Key（<code>wrk-</code> 开头，注意是连字符 <code>-</code>），不需要 Cookie，也不需要在浏览器里登录微信读书。</p>
+          <div class="row tight">
+            <button id="weread-scan-login" class="btn-secondary" type="button">微信扫码登录</button>
+            <a id="open-weread-key" class="link-btn" href="https://weread.qq.com/r/weread-skills" target="_blank" rel="noopener">获取 API Key ⧉</a>
+          </div>
+          <p class="hint">点「微信扫码登录」会打开官方页面；扫码登录后 API Key 会被自动捕获并填入下方，无需手动复制。</p>
+          <label for="cfg-weread-key">API Key</label>
+          <div class="input-eye">
+            <input id="cfg-weread-key" type="password" placeholder="wrk_xxxxxxxx" autocomplete="off" spellcheck="false">
+            <button class="eye-toggle" data-target="cfg-weread-key" type="button">&#128065;</button>
+          </div>
+        </section>
+
+        <section class="cfg-card">
+          <div class="cfg-step"><span class="cfg-num">3</span><h3>Notion 接入</h3></div>
+          <p class="cfg-hint">在 <a href="https://www.notion.so/profile/integrations" target="_blank" rel="noopener">Notion Integrations</a> 创建 integration，复制 Internal Integration Secret（<code>ntn_</code> 或 <code>secret_</code> 开头），并在模板页面 <code>••• → Connections</code> 中添加它。</p>
+          <label for="cfg-notion-token">Integration Token</label>
+          <div class="input-eye">
+            <input id="cfg-notion-token" type="password" placeholder="ntn_xxxxxxxx" autocomplete="off" spellcheck="false">
+            <button class="eye-toggle" data-target="cfg-notion-token" type="button">&#128065;</button>
+          </div>
+        </section>
+
+        <section class="cfg-card">
+          <div class="cfg-step"><span class="cfg-num">4</span><h3>同步设置</h3></div>
+          <p class="cfg-hint">细粒度开关（同步划线和笔记、同步快照、同步阅读记录、人物卡片、生成 AI 导读…）在 Notion 模板「设置」数据库中勾选，下次同步自动生效，不需要跑全量同步。</p>
+          <label for="cfg-start-year">阅读统计起始年份</label>
+          <input id="cfg-start-year" class="short-input" type="number" min="2000" max="2100" step="1" value="2023">
+          <label>.env 预览</label>
+          <pre id="cfg-env-preview" class="env-preview"></pre>
+          <div class="row right">
+            <button id="cfg-copy-env" class="btn-secondary">复制 .env 内容</button>
+            <button id="cfg-write-env" class="btn-secondary">写入项目 .env</button>
+          </div>
+          <div class="row tight">
+            <span id="cfg-native-status" class="status-pill">检测本机桥接…</span>
+            <button id="cfg-reprobe" class="link-btn">重新检测</button>
+            <span id="cfg-env-path" class="hint inline-hint"></span>
+          </div>
+          <p id="cfg-native-raw" class="hint raw-error" hidden></p>
+        </section>
+
+        <section class="cfg-card">
+          <div class="cfg-step"><span class="cfg-num">5</span><h3>运行同步</h3></div>
+          <p class="cfg-hint">通过本机桥接直接执行 <code>notionhub sync --quiet</code>，输出追加到项目 <code>logs/native-sync.log</code>。同步在后台进行，可随时点「刷新日志」查看进度。</p>
+          <div class="row tight">
+            <button id="cfg-run-sync" class="btn-secondary">运行同步</button>
+            <button id="cfg-refresh-log" class="link-btn">刷新日志</button>
+          </div>
+          <pre id="cfg-sync-log" class="env-preview log-view">（尚无日志）</pre>
+        </section>
+
+        <p class="footer-hint">
+          配置保存在本机 <code>chrome.storage.local</code>，不会上传。<br>
+          真正的同步由本机 <code>notionhub</code> CLI 执行，它读取项目目录下的 <code>.env</code>；点「复制 .env 内容」后粘贴进 .env 即可。
+        </p>
+      </div>
+
+      <footer class="drawer-foot">
+        <span id="cfg-status" class="status-pill"></span>
+        <div class="spacer"></div>
+        <a id="drawer-docs" class="link-btn" href="https://github.com/wslh/NotionHub#weread" target="_blank" rel="noopener">使用文档 ⧉</a>
+        <button id="cfg-save" class="btn-primary">保存配置</button>
+        <button id="cfg-sync" class="btn-secondary">开始同步</button>
+        <button id="cfg-actions-sync" class="btn-secondary" title="通过本仓库的 GitHub Actions 运行同步（weread.yml / sync.yml）">自托管同步</button>
+      </footer>
+    </aside>
+  </div>
+
+  <script src="panel.js"></script>
+</body>
+</html>
